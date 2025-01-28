@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Admins" %>
+
+<h1>Admins</h1>
+
+<div id="admins">
+  <div class="row">
+    <% @admins.each do |admin| %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= admin.name %></h5>
+            <%= link_to "Show", admin, class: "btn btn-primary btn-sm" %>
+            <%= link_to "Edit", edit_admin_path(admin), class: "btn btn-warning btn-sm" %>
+            <%= button_to "Delete", admin, method: :delete, class: "btn btn-danger btn-sm", data: { confirm: "Are you sure?" } %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to "New admin", new_admin_path, class: "btn btn-success mt-3" %>
