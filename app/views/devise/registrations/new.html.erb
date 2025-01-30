@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: rgb(219, 215, 215) !important;
+        }
+
+        .container {
+            height: 100%;
+            max-width: 1200px;
+            padding-left: 0; /* Remove left padding */
+        }
+
+        .split-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            gap: 2rem;
+        }
+
+        .animation-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align items to the left */
+            padding: 2rem;
+            margin-left: -2rem; /* Move animation container more to the left */
+        }
+
+        .animation-wrapper {
+            margin-left: -3rem; /* Additional left offset for the SVG */
+        }
+
+        .form-side {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user_card {
+            height: 450px;
+            width: 350px;
+            background: #ffffff;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .brand_logo_container {
+            position: absolute;
+            height: 130px;
+            width: 130px;
+            top: -70px;
+            border-radius: 50%;
+            background: rgb(155, 149, 149);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand_logo {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            border: 2px solid #1abc9c;
+        }
+
+        .form_container {
+            margin-top: 100px;
+        }
+
+        .signup_btn {
+            width: 100%;
+            background: #1abc9c !important;
+            color: white !important;
+            border-radius: 5px;
+            padding: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .signup_btn:hover {
+            background: #16a085 !important;
+            transform: translateY(-1px);
+        }
+
+        .input-group-text {
+            background: #1abc9c !important;
+            color: white !important;
+            border: 0 !important;
+            border-radius: 0.25rem 0 0 0.25rem !important;
+        }
+
+        .input_user, .input_pass {
+            background: #ffffff !important;
+            color: #2c3e50 !important;
+            border: 1px solid #e0e0e0 !important;
+            padding: 10px;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .input_user:focus, .input_pass:focus {
+            border-color: #1abc9c !important;
+            box-shadow: 0 0 0 0.2rem rgba(26, 188, 156, 0.25) !important;
+        }
+
+        .welcome-text {
+            color: #2c3e50;
+            text-align: left; /* Align text to the left */
+            margin-bottom: 2rem;
+            margin-left: 1rem; /* Add some left margin to the text */
+        }
+
+        /* Animation keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .floating-element {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .pulse-element {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="split-container">
+            <!-- Left side with animation -->
+            <div class="animation-side">
+                <div class="animation-wrapper">
+                    <svg width="400" height="400" viewBox="0 0 400 400">
+                        <!-- Background circle -->
+                        <circle cx="200" cy="200" r="180" fill="#1abc9c" opacity="0.1" class="pulse-element"/>
+                        
+                        <!-- Animated elements -->
+                        <g class="floating-element">
+                            <!-- Stylized computer/device -->
+                            <rect x="100" y="150" width="200" height="140" rx="10" fill="#1abc9c"/>
+                            <rect x="110" y="160" width="180" height="110" rx="5" fill="white"/>
+                            <rect x="160" y="290" width="80" height="20" fill="#1abc9c"/>
+                            <rect x="140" y="310" width="120" height="10" fill="#1abc9c"/>
+                            
+                            <!-- Abstract data elements -->
+                            <circle cx="150" cy="200" r="15" fill="#16a085"/>
+                            <circle cx="250" cy="200" r="15" fill="#16a085"/>
+                            <rect x="180" y="190" width="40" height="20" rx="5" fill="#16a085"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="welcome-text">
+                    <h1>Welcome!</h1>
+                    <p>Join our community today</p>
+                </div>
+            </div>
+
+            <!-- Right side with form -->
+            <div class="form-side">
+                <div class="user_card">
+                    <div class="d-flex justify-content-center">
+                        <div class="brand_logo_container">
+                            <img src="<%= asset_path('project logo.png') %>" class="brand_logo" alt="Logo">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center form_container">
+                        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form-horizontal" }) do |f| %>
+                        <h2 class="text-center mb-4">Sign Up</h2>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control input_user", placeholder: "Email" %>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+                            <%= f.password_field :password, autocomplete: "new-password", class: "form-control input_pass", placeholder: "Password" %>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+                            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control input_pass", placeholder: "Confirm Password" %>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-3">
+                            <%= f.submit "Sign Up", class: "btn signup_btn" %>
+                        </div>
+                        <% end %>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-center links">
+                            Already have an account? <a href="<%= link_to "Login", new_session_path(resource_name), class: "ml-2" %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

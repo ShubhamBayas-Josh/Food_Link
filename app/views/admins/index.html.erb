@@ -1,24 +1,193 @@
+<%= render 'shared/navbar' %>
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Admins" %>
+<% content_for :title, "Admin Dashboard" %>
 
-<h1>Admins</h1>
+<% if current_admin %>
+  <p>Logged in as: <%= current_admin.name %></p>
+<% end %>
 
-<div id="admins">
-  <div class="row">
-    <% @admins.each do |admin| %>
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><%= admin.name %></h5>
-            <%= link_to "Show", admin, class: "btn btn-primary btn-sm" %>
-            <%= link_to "Edit", edit_admin_path(admin), class: "btn btn-warning btn-sm" %>
-            <%= button_to "Delete", admin, method: :delete, class: "btn btn-danger btn-sm", data: { confirm: "Are you sure?" } %>
-          </div>
-        </div>
+<h1>Admin Dashboard</h1>
+
+<!-- Dashboard Overview Section -->
+<div class="row">
+  <div class="col-md-3">
+    <div class="card bg-primary text-white">
+      <div class="card-body">
+        <h5 class="card-title">Total Users</h5>
+        <p class="card-text"><%= @users_count %></p>
       </div>
-    <% end %>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-success text-white">
+      <div class="card-body">
+        <h5 class="card-title">Total Food Donations</h5>
+        <p class="card-text">Pending: <%= @pending_donations %> | Accepted: <%= @accepted_donations %> | Rejected: <%= @rejected_donations %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-warning text-white">
+      <div class="card-body">
+        <h5 class="card-title">Total Claims</h5>
+        <p class="card-text">Pending: <%= @pending_claims %> | Accepted: <%= @accepted_claims %> | Rejected: <%= @rejected_claims %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-danger text-white">
+      <div class="card-body">
+        <h5 class="card-title">Total Feedbacks</h5>
+        <p class="card-text"><%= @feedback_count %></p>
+      </div>
+    </div>
   </div>
 </div>
 
-<%= link_to "New admin", new_admin_path, class: "btn btn-success mt-3" %>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recent Activities</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom Styling */
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: 'Arial', sans-serif;
+    }
+    .container {
+      margin-top: 30px;
+    }
+    .table th, .table td {
+      color: #ffffff;
+    }
+    .table thead {
+      background-color: #444;
+    }
+    .activity {
+      background-color: #333;
+    }
+    .dropdown {
+      margin-bottom: 20px;
+    }
+    .dropdown-menu {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="text-center text-white">Recent Activities</h2>
+
+  <!-- Filter Dropdown -->
+  <div class="dropdown">
+    <label for="activity_filter" class="text-white">Filter Activities</label>
+    <select id="activity_filter" class="custom-select">
+      <option value="all">All</option>
+      <option value="24_hours">Last 24 Hours</option>
+      <option value="week">This Week</option>
+    </select>
+  </div>
+
+  <!-- Table for Recent Activities -->
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th>Activity</th>
+        <th>Details</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @recent_donors.each do |donor| %>
+        <tr class="activity" data-timestamp="<%= donor.created_at.to_i %>">
+          <td>New Donor Registered</td>
+          <td><%= donor.name %> (<%= donor.email %>)</td>
+          <td><%= donor.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+        </tr>
+      <% end %>
+
+      <% @recent_ngos.each do |ngo| %>
+        <tr class="activity" data-timestamp="<%= ngo.created_at.to_i %>">
+          <td>New NGO Registered</td>
+          <td><%= ngo.name %> (<%= ngo.email %>)</td>
+          <td><%= ngo.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+        </tr>
+      <% end %>
+
+      <% @recent_food_donations.each do |donation| %>
+        <tr class="activity" data-timestamp="<%= donation.created_at.to_i %>">
+          <td>New Food Donation</td>
+          <td><%= donation.food_type %> - <%= donation.quantity %> units</td>
+          <td><%= donation.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+        </tr>
+      <% end %>
+
+      <% @recent_claims.each do |claim| %>
+        <tr class="activity" data-timestamp="<%= claim.created_at.to_i %>">
+          <td>Food Claim Made</td>
+          <td>Claimed <%= claim.claimed_quantity %> units</td>
+          <td><%= claim.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+        </tr>
+      <% end %>
+
+      <% @recent_feedbacks.each do |feedback| %>
+        <tr class="activity" data-timestamp="<%= feedback.created_at.to_i %>">
+          <td>New User Feedback</td>
+          <td>Rating: <%= feedback.rating %> - "<%= feedback.comment %>"</td>
+          <td><%= feedback.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<!-- Bootstrap JS & jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+document.getElementById("activity_filter").addEventListener("change", function() {
+  let filter = this.value;
+  let now = Math.floor(Date.now() / 1000);
+  
+  document.querySelectorAll(".activity").forEach(row => {
+    let timestamp = parseInt(row.getAttribute("data-timestamp"));
+    let showRow = false;
+
+    if (filter === "all") {
+      showRow = true;
+    } else if (filter === "24_hours" && (now - timestamp) <= 86400) {
+      showRow = true;
+    } else if (filter === "week" && (now - timestamp) <= 604800) {
+      showRow = true;
+    }
+
+    row.style.display = showRow ? "" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
+<!-- app/views/admins/index.html.erb (or wherever you want to add the link) -->
+<h1>Admin Dashboard</h1>
+
+<!-- Link to the reports page -->
+<%= link_to "View Donation & Claim Reports", reports_admins_path, class: "btn btn-primary" %>
+
+
+<% if admin_signed_in? %>
+  <%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, class: "btn btn-danger mt-3" %>
+<% else %>
+  <%= button_to 'Sign In', new_admin_session_path, class: "btn btn-success mt-3" %>
+<% end %>

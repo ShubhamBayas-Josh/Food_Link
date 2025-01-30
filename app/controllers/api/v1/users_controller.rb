@@ -24,7 +24,6 @@ class Api::V1::UsersController < ActionController::API
   end
 
   def destroy
-    # Check if the user has associated records
     if @user.feedbacks.exists? || @user.food_claims.exists? || @user.food_transactions.exists? || @user.notifications.exists?
       render json: { error: "Cannot delete user with associated records" }, status: :unprocessable_entity
     else

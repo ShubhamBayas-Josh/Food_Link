@@ -1,0 +1,89 @@
+<%= content_for :title, "Donation & Claim Reports" %>
+
+<h1>Donation & Claim Reports</h1>
+
+<h3>Donations Over Time</h3>
+<canvas id="donationsOverTime"></canvas>
+
+<h3>Food Type Distribution</h3>
+<canvas id="foodTypeDistribution"></canvas>
+
+<h3>NGO Donation Activity</h3>
+<canvas id="ngoDonationActivity"></canvas>
+
+<script>
+  // Donations Over Time (Line Chart)
+  <% if @monthly_donations.present? %>
+    var ctx1 = document.getElementById('donationsOverTime').getContext('2d');
+    var donationsOverTime = new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: <%= @monthly_donations.keys.to_json %>,
+        datasets: [{
+          label: 'Food Donated per Month',
+          data: <%= @monthly_donations.values.to_json %>,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  <% else %>
+    console.log("No monthly donation data available");
+  <% end %>
+
+  // Food Type Distribution (Pie Chart)
+  <% if @food_type_distribution.present? %>
+    var ctx2 = document.getElementById('foodTypeDistribution').getContext('2d');
+    var foodTypeDistribution = new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: <%= @food_type_distribution.keys.to_json %>,
+        datasets: [{
+          label: 'Food Type Distribution',
+          data: <%= @food_type_distribution.values.to_json %>,
+          backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FFFF33'],
+          borderColor: 'rgba(255, 255, 255, 1)',
+          borderWidth: 1
+        }]
+      }
+    });
+  <% else %>
+    console.log("No food type distribution data available");
+  <% end %>
+
+  // NGO Donation Activity (Bar Chart)
+  <% if @ngo_donations.present? %>
+    var ctx3 = document.getElementById('ngoDonationActivity').getContext('2d');
+    var ngoDonationActivity = new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: <%= @ngo_donations.keys.to_json %>,
+        datasets: [{
+          label: 'NGO Donation Activity',
+          data: <%= @ngo_donations.values.to_json %>,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  <% else %>
+    console.log("No NGO donation activity data available");
+  <% end %>
+</script>

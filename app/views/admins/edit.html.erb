@@ -1,12 +1,12 @@
-<% content_for :title, "Editing admin" %>
+<% content_for :title, "Editing Admin" %>
 
-<h1>Editing admin</h1>
+<h1>Editing Admin</h1>
 
-<%= render "form", admin: @admin %>
+<%= render 'form', admin: @admin %>
 
 <br>
 
 <div>
-  <%= link_to "Show this admin", @admin, class: "btn btn-info" %> |
-  <%= link_to "Back to admins", admins_path, class: "btn btn-secondary" %>
+  <%= link_to "Show this Admin", @admin %> |
+  <%= link_to "Back to Admins", admins_path %>
 </div>

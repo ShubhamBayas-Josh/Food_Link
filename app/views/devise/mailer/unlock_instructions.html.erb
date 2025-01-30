@@ -1,0 +1,13 @@
+<div class="card shadow-lg p-4" style="max-width: 600px; margin: 0 auto;">
+  <div class="card-body">
+    <h5 class="card-title text-center mb-4">Hello <%= @resource.email %>!</h5>
+
+    <p class="card-text">Your account has been locked due to an excessive number of unsuccessful sign-in attempts.</p>
+
+    <p class="card-text">Click the link below to unlock your account:</p>
+
+    <div class="d-grid gap-2 mt-4">
+      <%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token), class: 'btn btn-primary btn-lg' %>
+    </div>
+  </div>
+</div>
