@@ -19,7 +19,7 @@
 
   <div>
     <%= form.label :role %><br>
-    <%= form.text_field :role, required: true %>
+    <%= form.select :role, options_for_select(['admin', 'Ngo', 'Donor'], @user.role), required: true %>
   </div>
 
   <div>
