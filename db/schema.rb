@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_27_192414) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_27_194148) do
   create_table "feedbacks", force: :cascade do |t|
     t.integer "rating"
     t.text "comment"
@@ -71,7 +71,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_192414) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
   add_foreign_key "feedbacks", "food_transactions"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "feedbacks", "users", column: "created_by_id"
