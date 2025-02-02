@@ -1,12 +1,14 @@
 class User < ApplicationRecord
-  validates :email, presence: true, uniqueness: true
+  # Validations
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true
   validates :name, presence: true
   validates :role, presence: true
   validates :address, presence: true
 
-  has_many :feedbacks
-  has_many :food_claims
-  has_many :food_transactions
-  has_many :notifications
+  # Associations with dependent: :destroy
+  has_many :feedbacks, dependent: :destroy
+  has_many :food_claims, dependent: :destroy
+  has_many :food_transactions, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 end
