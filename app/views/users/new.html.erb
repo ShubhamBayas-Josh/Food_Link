@@ -1,35 +1,37 @@
-<% action = @user.new_record? ? 'Create' : 'Update' %>
-<h1><%= action %> User</h1>
+<div class="container my-4">
+  <% action = @user.new_record? ? 'Create' : 'Update' %>
+  <h1 class="text-center mb-4"><%= action %> User</h1>
 
-<%= form_with model: @user, local: true do |form| %>
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name, required: true %>
-  </div>
+  <%= form_with model: @user, local: true, class: 'w-50 mx-auto' do |form| %>
+    <div class="form-group">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, required: true, class: 'form-control' %>
+    </div>
 
-  <div>
-    <%= form.label :email %><br>
-    <%= form.email_field :email, required: true %>
-  </div>
+    <div class="form-group">
+      <%= form.label :email, class: 'form-label' %>
+      <%= form.email_field :email, required: true, class: 'form-control' %>
+    </div>
 
-  <div>
-    <%= form.label :password %><br>
-    <%= form.password_field :password, required: true %>
-  </div>
+    <div class="form-group">
+      <%= form.label :password, class: 'form-label' %>
+      <%= form.password_field :password, required: true, class: 'form-control' %>
+    </div>
 
-  <div>
-    <%= form.label :role %><br>
-    <%= form.select :role, options_for_select(['admin', 'Ngo', 'Donor'], @user.role), required: true %>
-  </div>
+    <div class="form-group">
+      <%= form.label :role, class: 'form-label' %>
+      <%= form.select :role, options_for_select(['admin', 'Ngo', 'Donor'], @user.role), required: true, class: 'form-control' %>
+    </div>
 
-  <div>
-    <%= form.label :address %><br>
-    <%= form.text_area :address, rows: 3, required: true %>
-  </div>
+    <div class="form-group">
+      <%= form.label :address, class: 'form-label' %>
+      <%= form.text_area :address, rows: 3, required: true, class: 'form-control' %>
+    </div>
 
-  <div style="margin-top: 10px;">
-    <%= form.submit action %>
-  </div>
-<% end %>
+    <div class="form-group text-center mt-3">
+      <%= form.submit action, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
 
-<%= link_to 'Back to All Users', users_path, style: 'margin-top: 20px; display: inline-block;' %>
+  <%= link_to 'Back to All Users', users_path, class: 'btn btn-secondary mt-3' %>
+</div>
