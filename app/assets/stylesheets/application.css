@@ -13,3 +13,59 @@
  *= require_tree .
  *= require_self
  */
+ .gradient-custom-2 {
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  }
+  
+  @media (min-width: 768px) {
+    .gradient-form {
+      height: 100vh !important;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .gradient-custom-2 {
+      border-top-right-radius: .3rem;
+      border-bottom-right-radius: .3rem;
+    }
+  }
+  
+
+/* Ensure the body and html take up the full height of the page */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Flexbox layout for the body */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Forces the body to take full screen height */
+}
+
+/* Main content fills the remaining space */
+main {
+  flex-grow: 1;
+}
+
+/* Footer Styling */
+footer {
+  margin-top: auto; /* This ensures the footer sticks to the bottom */
+  background-color: #343a40;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Footer social icons */
+footer .social-icons a {
+  font-size: 1.5rem;
+  color: white;
+  margin-right: 15px;
+  transition: color 0.3s ease;
+}
+
+footer .social-icons a:hover {
+  color: #f0ad4e; /* Highlight social icons on hover */
+}

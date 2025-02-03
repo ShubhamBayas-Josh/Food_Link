@@ -1,0 +1,38 @@
+<!-- app/views/shared/_footer.html.erb -->
+<footer class="footer bg-dark text-white py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <h5>About Us</h5>
+        <p>Food Link connects people with food donations to NGOs in need, fighting hunger and reducing food waste.</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Home</a></li>
+          <li><a href="#" class="text-white">About</a></li>
+          <li><a href="#" class="text-white">Contact</a></li>
+          <li><a href="#" class="text-white">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Follow Us</h5>
+        <div class="social-icons">
+          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center py-3">
+    <p>&copy; <%= Time.now.year %> Food Link. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- Add Bootstrap JS and Font Awesome for icons -->
+<%= javascript_include_tag 'https://code.jquery.com/jquery-3.5.1.slim.min.js' %>
+<%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js' %>
+<%= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
+<%= javascript_include_tag 'https://kit.fontawesome.com/a076d05399.js' %>

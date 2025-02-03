@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fancy Navbar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .navbar-custom {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .navbar-brand img {
+            width: 50px;
+            border-radius: 50%;
+        }
+        .nav-link {
+            color: white !important;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+        .nav-link:hover {
+            color: #ffcc00 !important;
+        }
+        .dropdown-menu {
+            background-color: #2a5298;
+            border: none;
+        }
+        .dropdown-item {
+            color: white;
+        }
+        .dropdown-item:hover {
+            background-color: #ffcc00;
+            color: black;
+        }
+        .search-box {
+            border-radius: 20px;
+            padding: 5px 15px;
+            border: none;
+        }
+        .btn-custom {
+            background-color: #ffcc00;
+            color: black;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+
+        .btn-custom:hover {
+            background-color: #ffb300;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="<%= asset_path('logo.png') %>" alt="Logo">
+            <a class="nav-link" href="#">Hello Admin!</a>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Services
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Web Development</a></li>
+                        <li><a class="dropdown-item" href="#">AI Solutions</a></li>
+                        <li><a class="dropdown-item" href="#">Cloud Services</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control search-box me-2" type="search" placeholder="Search">
+                <button class="btn btn-custom" type="submit">Search</button>
+            </form>
+            <div class="ms-3">
+                <%= button_to 'Logout', destroy_admin_session_path, method: :delete, class: 'btn btn-custom' %>
+                <%= link_to 'Sign Up', new_admin_registration_path, class: 'btn btn-custom' %>
+            </div>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

@@ -10,32 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_27_192414) do
-  create_table "feedbacks", force: :cascade do |t|
-    t.integer "rating"
-    t.text "comment"
-    t.integer "user_id", null: false
-    t.integer "food_transaction_id", null: false
-    t.integer "created_by_id", null: false
+ActiveRecord::Schema[7.2].define(version: 2025_01_28_193755) do
+  create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["created_by_id"], name: "index_feedbacks_on_created_by_id"
-    t.index ["food_transaction_id"], name: "index_feedbacks_on_food_transaction_id"
-    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "food_claims", force: :cascade do |t|
-    t.string "claimed_quantity"
-    t.string "claim_status"
-    t.integer "food_transaction_id", null: false
-    t.integer "user_id", null: false
-    t.integer "creator_user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["creator_user_id"], name: "index_food_claims_on_creator_user_id"
-    t.index ["food_transaction_id"], name: "index_food_claims_on_food_transaction_id"
-    t.index ["user_id"], name: "index_food_claims_on_user_id"
-  end
+create_table "feedbacks", force: :cascade do |t|
+  t.integer "rating"
+  t.text "comment"
+  t.integer "user_id", null: false
+  t.integer "food_transaction_id", null: false
+  t.integer "created_by_id", null: false
+  t.datetime "created_at", null: false
+  t.datetime "updated_at", null: false
+  t.index ["created_by_id"], name: "index_feedbacks_on_created_by_id"
+  t.index ["food_transaction_id"], name: "index_feedbacks_on_food_transaction_id"
+  t.index ["user_id"], name: "index_feedbacks_on_user_id"
+end
+
+create_table "food_claims", force: :cascade do |t|
+  t.string "claimed_quantity"
+  t.string "claim_status"
+  t.integer "food_transaction_id", null: false
+  t.integer "user_id", null: false
+  t.integer "creator_user_id", null: false
+  t.datetime "created_at", null: false
+  t.datetime "updated_at", null: false
+  t.index ["creator_user_id"], name: "index_food_claims_on_creator_user_id"
+  t.index ["food_transaction_id"], name: "index_food_claims_on_food_transaction_id"
+  t.index ["user_id"], name: "index_food_claims_on_user_id"
+end
+
 
   create_table "food_transactions", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -72,7 +85,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_192414) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "feedbacks", "food_transactions"
+  add_foreign_key "feedbacks", "food_transactions"  
   add_foreign_key "feedbacks", "users"
   add_foreign_key "feedbacks", "users", column: "created_by_id"
   add_foreign_key "food_claims", "food_transactions"

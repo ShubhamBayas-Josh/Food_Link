@@ -1,0 +1,11 @@
+<div class="card shadow-lg p-4" style="max-width: 600px; margin: 0 auto;">
+  <div class="card-body">
+    <h5 class="card-title text-center mb-4">Welcome <%= @email %>!</h5>
+
+    <p class="card-text">You can confirm your account email through the link below:</p>
+
+    <div class="d-grid gap-2">
+      <%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token), class: 'btn btn-primary btn-lg' %>
+    </div>
+  </div>
+</div>
