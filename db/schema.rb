@@ -14,7 +14,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_193755) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -31,7 +30,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_193755) do
     t.integer "food_transactions_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["food_transactions_id"], name: "index_feedbacks_on_food_transactions_id"
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
     t.index ["users_id"], name: "index_feedbacks_on_users_id"
   end
 
@@ -42,7 +43,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_193755) do
     t.integer "users_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["food_transactions_id"], name: "index_food_claims_on_food_transactions_id"
+    t.index ["user_id"], name: "index_food_claims_on_user_id"
     t.index ["users_id"], name: "index_food_claims_on_users_id"
   end
 
@@ -82,8 +85,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_193755) do
   end
 
   add_foreign_key "feedbacks", "food_transactions", column: "food_transactions_id"
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "feedbacks", "users", column: "users_id"
   add_foreign_key "food_claims", "food_transactions", column: "food_transactions_id"
+  add_foreign_key "food_claims", "users"
   add_foreign_key "food_claims", "users", column: "users_id"
   add_foreign_key "food_transactions", "users"
   add_foreign_key "notifications", "users", column: "users_id"
