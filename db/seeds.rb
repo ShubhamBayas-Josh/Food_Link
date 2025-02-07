@@ -29,37 +29,44 @@ end
 
 # For Food Transaction Request
 food_transactions = [
-  { email: "shubhambayas7@gmail.com", food_type: "Rice", quantity: 100, description: "Staple food", address: "Damani nagar", transaction_type: "Donation", status: "Pending", expiration_date: Date.new(2025, 3, 1) },
-  { email: "harsh8@gmail.com", food_type: "Vegetables", quantity: 50, description: "Fresh vegetables", address: "pune", transaction_type: "Donation", status: "Completed", expiration_date: Date.new(2025, 2, 15) },
-  { email: "abhays123@gmail.com", food_type: "Rice", quantity: 200, description: "Staple food for community", address: "pune", transaction_type: "Request", status: "Pending", expiration_date: Date.new(2025, 3, 10) },
-  { email: "yash8@gmail.com", food_type: "Bread", quantity: 150, description: "Freshly baked bread", address: "Solapur", transaction_type: "Donation", status: "Completed", expiration_date: Date.new(2025, 2, 25) },
-  { email: "shreyash1@gmail.com", food_type: "Fruits", quantity: 120, description: "Seasonal fruits", address: "Mumbai", transaction_type: "Request", status: "Pending", expiration_date: Date.new(2025, 3, 5) },
-  { email: "sakshi@gmail.com", food_type: "Vegetables", quantity: 129, description: "paneer tikka", address: "vai", transaction_type: "Donation", status: "Completed", expiration_date: Date.new(2025, 4, 29) }
+  { email: "shubhambayas7@gmail.com", food_type: "Rice", quantity: 100, description: "Staple food", address: "Damani nagar", transaction_type: "offer", status: "pending", expiration_date: Date.new(2025, 3, 1) },
+  { email: "harsh8@gmail.com", food_type: "Vegetables", quantity: 50, description: "Fresh vegetables", address: "pune", transaction_type: "offer", status: "completed", expiration_date: Date.new(2025, 2, 15) },
+  { email: "abhays123@gmail.com", food_type: "Rice", quantity: 200, description: "Staple food for community", address: "pune", transaction_type: "request", status: "pending", expiration_date: Date.new(2025, 3, 10) },
+  { email: "yash8@gmail.com", food_type: "Bread", quantity: 150, description: "Freshly baked bread", address: "Solapur", transaction_type: "offer", status: "completed", expiration_date: Date.new(2025, 2, 25) },
+  { email: "shreyash1@gmail.com", food_type: "Fruits", quantity: 120, description: "Seasonal fruits", address: "Mumbai", transaction_type: "request", status: "pending", expiration_date: Date.new(2025, 3, 5) },
+  { email: "sakshi@gmail.com", food_type: "Vegetables", quantity: 129, description: "paneer tikka", address: "vai", transaction_type: "offer", status: "completed", expiration_date: Date.new(2025, 4, 29) }
 ]
 
 food_transactions.each do |transaction_data|
   user = User.find_by(email: transaction_data[:email])
 
   if user
-    FoodTransaction.find_or_create_by!(user_id: user.id, food_type: transaction_data[:food_type], quantity: transaction_data[:quantity], description: transaction_data[:description]) do |transaction|
-      transaction.address = transaction_data[:address]
-      transaction.transaction_type = transaction_data[:transaction_type]
-      transaction.status = transaction_data[:status]
-      transaction.expiration_date = transaction_data[:expiration_date]
-    end
+    transaction = FoodTransaction.find_or_initialize_by(
+      user_id: user.id,
+      food_type: transaction_data[:food_type],
+      quantity: transaction_data[:quantity],
+      description: transaction_data[:description]
+    )
+
+    transaction.address = transaction_data[:address]
+    transaction.transaction_type = transaction_data[:transaction_type]
+    transaction.status = transaction_data[:status]
+    transaction.expiration_date = transaction_data[:expiration_date]
+
+    transaction.save! # Ensures validation runs and data is persisted
   end
 end
 
-admins = [
-  { name: "Admin1", email: "admin1@example.com", password: "Admin@123" },
-  { name: "Admin2", email: "admin2@example.com", password: "Admin@123" }
-]
+# admins = [
+#   { name: "Admin1", email: "admin1@example.com", password: "Admin@123" },
+#   { name: "Admin2", email: "admin2@example.com", password: "Admin@123" }
+# ]
 
-for admin_data in admins do
-  Admin.find_or_create_by!(email: admin_data[:email]) do |admin|
-    admin.name = admin_data[:name]
-    admin.password = admin_data[:password]
-  end
-end
+# for admin_data in admins do
+#   Admin.find_or_create_by!(email: admin_data[:email]) do |admin|
+#     # admin.name = admin_data[:name]
+#     admin.password = admin_data[:password]
+#   end
+# end
 
 # User.delete_all

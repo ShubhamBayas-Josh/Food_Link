@@ -1,100 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fancy Navbar</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
-        .navbar-custom {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        .nav-icon {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
         }
-        .navbar-brand img {
-            width: 50px;
-            border-radius: 50%;
-        }
-        .nav-link {
-            color: white !important;
-            font-size: 1.1rem;
-            transition: 0.3s;
-        }
-        .nav-link:hover {
-            color: #ffcc00 !important;
-        }
-        .dropdown-menu {
-            background-color: #2a5298;
-            border: none;
-        }
-        .dropdown-item {
-            color: white;
-        }
-        .dropdown-item:hover {
-            background-color: #ffcc00;
-            color: black;
-        }
-        .search-box {
-            border-radius: 20px;
-            padding: 5px 15px;
-            border: none;
-        }
-        .btn-custom {
-            background-color: #ffcc00;
-            color: black;
-            font-weight: bold;
-            border-radius: 20px;
-        }
-
-        .btn-custom:hover {
-            background-color: #ffb300;
+        .d-flex{
+            display: flex;
+            margin-right: 1.5rem;
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-custom">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="<%= asset_path('logo.png') %>" alt="Logo">
-            <a class="nav-link" href="#">Hello Admin!</a>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <%# <a class="navbar-brand" href="#">Navbar</a> %>
+        <img src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link active d-flex flex-column align-items-center" href="#">
+                        <i class="fa fa-home nav-icon"></i>
+                        <%= link_to "Home", admins_path, class: "text-decoration-none" %>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link d-flex flex-column align-items-center" href="#">
+                        <div class="position-relative">
+                            <i class="fa fa-envelope-o nav-icon"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">11</span>
+                        </div>
+                        Link
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled d-flex flex-column align-items-center" href="#">
+                        <div class="position-relative">
+                            <i class="fa fa-envelope-o nav-icon"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">11</span>
+                        </div>
+                        Disabled
+                    </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Services
+                    <a class="nav-link dropdown-toggle d-flex flex-column align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="position-relative">
+                            <i class="fa fa-envelope-o nav-icon"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">11</span>
+                        </div>
+                        Dropdown
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Web Development</a></li>
-                        <li><a class="dropdown-item" href="#">AI Solutions</a></li>
-                        <li><a class="dropdown-item" href="#">Cloud Services</a></li>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
+            </ul>
+            
+           
+            
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+             <ul class="navbar-nav mb-2 mb-lg-0 me-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link d-flex flex-column align-items-center" href="#">
+                        <div class="position-relative">
+                            <i class="fa fa-bell nav-icon"></i>
+                            <%# <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">11</span> %>
+                        </div>
+                        <%= link_to "Login", new_session_path(:admin), class: "text-decoration-none" %>
+
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-column align-items-center" href="#">
+                        <div class="position-relative">
+                            <i class="fa fa-globe nav-icon"></i>
+                            <%# <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">11</span> %>
+                        </div>
+                        <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "text-decoration-none" %>
+
+                    </a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control search-box me-2" type="search" placeholder="Search">
-                <button class="btn btn-custom" type="submit">Search</button>
-            </form>
-            <div class="ms-3">
-                <%= button_to 'Logout', destroy_admin_session_path, method: :delete, class: 'btn btn-custom' %>
-                <%= link_to 'Sign Up', new_admin_registration_path, class: 'btn btn-custom' %>
-            </div>
         </div>
     </div>
 </nav>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

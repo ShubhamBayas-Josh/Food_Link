@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  # root to: "home#index"
-  devise_for :admins
+  root to: "home#index"
+  devise_for :admins, controllers: {
+    registrations: "admins/registrations"
+  }
   resources :activities, only: [ :index ]  # For ActivitiesController
   resources :admins do
     collection do
@@ -8,12 +10,19 @@ Rails.application.routes.draw do
     end
   end
   resources :users
+  # post "/login", to: "auth#login"
 
   namespace :api do
     namespace :v1 do
       resources :users, only: [ :index, :show, :create, :update, :destroy ]
+      resources :food_claims, only: [ :index, :show, :create, :update, :destroy ]
+      resources :food_transaction, only: [ :index, :show, :create, :update, :destroy ]
+      resources :feedbacks, only: [ :index, :show, :create, :update, :destroy ]
+      resources :admins, only: [ :index, :show, :create, :update, :destroy ]
+      post "/auth/login", to: "authentication#login"
     end
   end
+
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
