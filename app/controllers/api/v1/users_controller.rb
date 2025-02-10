@@ -1,4 +1,5 @@
-class Api::V1::UsersController < ActionController::API
+class Api::V1::UsersController < Api::V1::ApplicationController # rubocop:disable Style/ColonMethodCall
+  before_action :authenticate_request, only: [ :index, :show, :update, :destroy ]
   before_action :set_user, only: [ :show, :update, :destroy ]
 
   def index
