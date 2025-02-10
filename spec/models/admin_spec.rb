@@ -33,6 +33,5 @@ RSpec.describe Admin, type: :model do
       admin = Admin.new(email: "sample@gmail.com", password: "password", name: "sample")
       expect(admin.save).to eq(true), "Admin should be saved with a valid email"
     end
-
   end
 end
