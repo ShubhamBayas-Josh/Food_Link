@@ -1,4 +1,4 @@
-require_relative "../json_web_token.rb"
+# require_relative "../json_web_token.rb"
 
 class Api::V1::ApplicationController < ActionController::API
   include JsonWebToken
