@@ -1,6 +1,6 @@
 class Api::V1::FoodClaimsController < ApplicationController
   def index
-    @food_claims = food_claim.all
+    @food_claims = FoodClaim.all
     render json: @food_claims, status: :ok
   end
 
@@ -13,7 +13,7 @@ class Api::V1::FoodClaimsController < ApplicationController
   end
 
   def create
-    @food_claim = food_claim.new(food_claim_params)
+    @food_claim = FoodClaim.new(food_claim_params)
     if @food_claim.save
       render json: @food_claim, status: :created
     else
@@ -41,7 +41,7 @@ class Api::V1::FoodClaimsController < ApplicationController
   private
 
   def set_food_claim
-    @food_claim = food_claim.find_by(id: params[:id])
+    @food_claim = FoodClaim.find_by(id: params[:id])
     if @food_claim.nil?
       render json: { error: "food_claim not found" }, status: :not_found
     end

@@ -1,6 +1,6 @@
 class Api::V1::FoodTransactionsController < ApplicationController
   def index
-    @food_transactions = food_transaction.all
+    @food_transactions = FoodTransaction.all
     render json: @food_transactions, status: :ok
   end
 

@@ -1,6 +1,6 @@
 class Api::V1::FeedbacksController < ApplicationController
   def index
-    @feedbacks = feedback.all
+    @feedbacks = Feedback.all
     render json: @feedbacks, status: :ok
   end
 
@@ -13,7 +13,7 @@ class Api::V1::FeedbacksController < ApplicationController
   end
 
   def create
-    @feedback = feedback.new(feedback_params)
+    @feedback = Feedback.new(feedback_params)
     if @feedback.save
       render json: @feedback, status: :created
     else
@@ -41,7 +41,7 @@ class Api::V1::FeedbacksController < ApplicationController
   private
 
   def set_feedback
-    @feedback = feedback.find_by(id: params[:id])
+    @feedback = Feedback.find_by(id: params[:id])
     if @feedback.nil?
       render json: { error: "feedback not found" }, status: :not_found
     end
