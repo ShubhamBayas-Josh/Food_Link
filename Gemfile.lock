@@ -327,6 +327,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  i18n (~> 1.14, >= 1.14.1)
   importmap-rails
   jbuilder
   jsbundling-rails (~> 1.3)

@@ -24,4 +24,6 @@ module FoodLink
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
   end
+  I18n.load_path += Dir[File.expand_path("config/locales") + "/*.yml"]
+  I18n.default_locale = :en # (note that `en` is already the default!)
 end

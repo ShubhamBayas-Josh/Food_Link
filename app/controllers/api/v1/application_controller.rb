@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 require_relative "../json_web_token.rb"
 
 class Api::V1::ApplicationController < ActionController::API
@@ -11,5 +12,11 @@ class Api::V1::ApplicationController < ActionController::API
     header = header.split(" ").last if header
     decoded = JsonWebToken.decode(header)
     @current_admin = Admin.find(decoded[:admin_id])
+=======
+module Api
+  module V1
+    class ApplicationController < ActionController::API
+    end
+>>>>>>> Stashed changes
   end
 end
