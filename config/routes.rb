@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
   resources :users
   # post "/login", to: "auth#login"
-
+  # resources :donations
   namespace :api do
     namespace :v1 do
       resources :users, only: [ :index, :show, :create, :update, :destroy ]
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
   end
 
-
+  resources :orders
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
