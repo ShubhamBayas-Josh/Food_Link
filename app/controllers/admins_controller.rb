@@ -93,5 +93,3 @@ class AdminsController < ApplicationController
     params.require(:admin).permit(:name) # Add other fields as needed
   end
 end
-
-
