@@ -4,102 +4,204 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
+        .navbar {
+            background: linear-gradient(to right, #1a1f37, #2d3258);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-item {
+            margin: 0 0.25rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link.active {
+            color: #ffffff !important;
+            background: rgba(59, 130, 246, 0.5);
+        }
+
         .nav-icon {
             font-size: 1.25rem;
             margin-bottom: 0.25rem;
+            transition: transform 0.2s ease;
         }
-        .d-flex{
-            display: flex;
-            margin-right: 1.5rem;
+
+        .nav-link:hover .nav-icon {
+            transform: translateY(-2px);
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            padding: 0.25em 0.6em;
+            font-weight: 600;
+        }
+
+        .search-form {
+            position: relative;
+            margin-right: 1rem;
+        }
+
+        .search-form .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding-left: 2.5rem;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .search-form .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+
+        .search-form .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            pointer-events: none;
+        }
+
+        .dropdown-menu {
+            background: #ffffff;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #374151;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-brand img {
+            transition: transform 0.2s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 992px) {
+            .search-form .form-control {
+                width: 100%;
+            }
+            
+            .nav-item {
+                margin: 0.25rem 0;
+            }
         }
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <%= link_to (admin_signed_in? ? edit_admin_path(current_admin) : root_path), class: "navbar-brand" do %>
+                <img src="<%= asset_path('logo.png') %>" alt="Logo" width="50" height="50" class="d-inline-block align-top">
+            <% end %>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <%# <a class="navbar-brand" href="#">Navbar</a> %>
-        <img src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active d-flex flex-column align-items-center" href="#">
-                        <i class="fa fa-home nav-icon"></i>
-                        <%= link_to "Home", admins_path, class: "text-decoration-none" %>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center" href="#">
-                        <div class="position-relative">
-                            <i class="fa fa-envelope-o nav-icon"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">11</span>
-                        </div>
-                        Link
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled d-flex flex-column align-items-center" href="#">
-                        <div class="position-relative">
-                            <i class="fa fa-envelope-o nav-icon"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">11</span>
-                        </div>
-                        Disabled
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle d-flex flex-column align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="position-relative">
-                            <i class="fa fa-envelope-o nav-icon"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">11</span>
-                        </div>
-                        Dropdown
-                    </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <i class="fa fa-bars" style="color: white;"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <%= link_to admins_path, class: "nav-link active d-flex flex-column align-items-center" do %>
+                            <i class="fa fa-home nav-icon"></i>
+                            <span>Home</span>
+                        <% end %>
+                    </li>
+                    
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex flex-column align-items-center" href="#">
+                            <div class="position-relative">
+                                <i class="fa fa-envelope-o nav-icon"></i>
+                            </div>
+                            <span>Messages</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex flex-column align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="navbarDropdown">
+                            <div class="position-relative">
+                                <i class="fa fa-th-large nav-icon"></i>
+                            </div>
+                            <span>Menu</span>
+                        </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="#">Help Center</a></li>
                     </ul>
-                </li>
-            </ul>
-            
-           
-            
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+                    </li>
+                </ul>
 
-             <ul class="navbar-nav mb-2 mb-lg-0 me-3">
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center" href="#">
-                        <div class="position-relative">
-                            <i class="fa fa-bell nav-icon"></i>
-                            <%# <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">11</span> %>
-                        </div>
-                        <%= link_to "Login", new_session_path(:admin), class: "text-decoration-none" %>
+                <form class="search-form d-flex">
+                    <i class="fa fa-search search-icon"></i>
+                    <input class="form-control" type="search" placeholder="Search..." aria-label="Search">
+                </form>
 
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center" href="#">
-                        <div class="position-relative">
-                            <i class="fa fa-globe nav-icon"></i>
-                            <%# <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">11</span> %>
-                        </div>
-                        <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "text-decoration-none" %>
-
-                    </a>
-                </li>
-            </ul>
+                <ul class="navbar-nav">
+                    <% if admin_signed_in? %>
+                        <li class="nav-item">
+                            <%= button_to destroy_admin_session_path, method: :delete, class: "nav-link d-flex flex-column align-items-center" do %>
+                                <i class="fa fa-sign-out nav-icon"></i>
+                                <span>Logout</span>
+                            <% end %>
+                        </li>
+                    <% else %>
+                        <li class="nav-item">
+                            <%= link_to new_session_path(:admin), class: "nav-link d-flex flex-column align-items-center" do %>
+                                <div class="position-relative">
+                                    <i class="fa fa-sign-in nav-icon"></i>
+                                </div>
+                                <span>Login</span>
+                            <% end %>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,193 +1,286 @@
-<%= render 'shared/navbar' %>
-<p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Admin Dashboard" %>
+<div class="admin-dashboard bg-light min-vh-100">
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
 
-<% if current_admin %>
-  <%# <p>Logged in as: <%= current_admin.name %>
-<% end %>
+  <div class="container-fluid py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="h3 mb-0 text-gray-800">Admin Dashboard</h1>
+        <% if current_admin %>
+          <p class="text-muted">Welcome back, <%= current_admin.name %></p>
+        <% end %>
+      </div>
+      <div>
+        <%= link_to "View Reports", reports_admins_path, class: "btn btn-outline-primary me-2" %>
+        
+      </div>
+    </div>
 
-<h1>Admin Dashboard</h1>
+    <!-- Stats Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="card bg-primary h-100 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="card-title text-white-50">Total Users</h6>
+                <h2 class="display-6 mb-0 text-white"><%= @users_count %></h2>
+              </div>
+              <div class="rounded-circle bg-primary-light p-2">
+                <i class="fas fa-users fa-2x text-white"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<!-- Dashboard Overview Section -->
-<div class="row">
-  <div class="col-md-3">
-    <div class="card bg-primary text-white">
-      <div class="card-body">
-        <h5 class="card-title">Total Users</h5>
-        <p class="card-text"><%= @users_count %></p>
+      <div class="col-md-3">
+        <div class="card bg-success h-100 shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-white-50">Food Donations</h6>
+            <h2 class="display-6 mb-2 text-white"><%= @pending_donations + @accepted_donations + @rejected_donations %></h2>
+            <div class="text-white-50 small">
+              <span class="me-2">Pending: <%= @pending_donations %></span>
+              <span class="me-2">Accepted: <%= @accepted_donations %></span>
+              <span>Rejected: <%= @rejected_donations %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card bg-warning h-100 shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-white-50">Total Claims</h6>
+            <h2 class="display-6 mb-2 text-white"><%= @pending_claims + @accepted_claims + @rejected_claims %></h2>
+            <div class="text-white-50 small">
+              <span class="me-2">Pending: <%= @pending_claims %></span>
+              <span class="me-2">Accepted: <%= @accepted_claims %></span>
+              <span>Rejected: <%= @rejected_claims %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card bg-danger h-100 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="card-title text-white-50">Total Feedbacks</h6>
+                <h2 class="display-6 mb-0 text-white"><%= @feedback_count %></h2>
+              </div>
+              <div class="rounded-circle bg-danger-light p-2">
+                <i class="fas fa-comments fa-2x text-white"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="row mt-4">
+    <!-- Quick Actions -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">Manage Donations</h5>
+          <p class="card-text">View and approve new food donation requests.</p>
+          <a href="#" class="btn btn-primary">View Donations</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">User Management</h5>
+          <p class="card-text">Manage NGO representatives and volunteers.</p>
+          <a href="<%= users_path %>" class="btn btn-primary">Manage Users</a> </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">Reports & Analytics</h5>
+          <p class="card-text">Generate reports and track donation trends.</p>
+          <a href="<%= reports_admins_path %>" class="btn btn-primary">View Reports</a>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="card bg-success text-white">
-      <div class="card-body">
-        <h5 class="card-title">Total Food Donations</h5>
-        <p class="card-text">Pending: <%= @pending_donations %> | Accepted: <%= @accepted_donations %> | Rejected: <%= @rejected_donations %></p>
+<style>
+  /* Admin Dashboard Styles */
+  .dashboard-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+
+  .dashboard-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  /* Card Styling */
+  .dashboard-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: white;
+  }
+
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .dashboard-card .card-body {
+    padding: 20px;
+  }
+
+  .dashboard-card .card-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .dashboard-card .card-text {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .dashboard-card .btn {
+    margin-top: 10px;
+    font-weight: bold;
+    border-radius: 8px;
+  }
+
+</style><br>
+
+    <!-- Recent Activities Section -->
+    <div class="card shadow-sm">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Recent Activities</h5>
+          <div class="w-auto">
+            <select id="activity_filter" class="form-select form-select-sm">
+              <option value="all">All Time</option>
+              <option value="24_hours">Last 24 Hours</option>
+              <option value="week">This Week</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-warning text-white">
-      <div class="card-body">
-        <h5 class="card-title">Total Claims</h5>
-        <p class="card-text">Pending: <%= @pending_claims %> | Accepted: <%= @accepted_claims %> | Rejected: <%= @rejected_claims %></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-danger text-white">
-      <div class="card-body">
-        <h5 class="card-title">Total Feedbacks</h5>
-        <p class="card-text"><%= @feedback_count %></p>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Activity</th>
+                <th>Details</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @recent_donors.each do |donor| %>
+                <tr class="activity" data-timestamp="<%= donor.created_at.to_i %>">
+                  <td><span class="badge bg-info">New Donor</span></td>
+                  <td><%= donor.name %> (<%= donor.email %>)</td>
+                  <td><%= donor.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+                </tr>
+              <% end %>
+
+              <% @recent_ngos.each do |ngo| %>
+                <tr class="activity" data-timestamp="<%= ngo.created_at.to_i %>">
+                  <td><span class="badge bg-primary">New NGO</span></td>
+                  <td><%= ngo.name %> (<%= ngo.email %>)</td>
+                  <td><%= ngo.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+                </tr>
+              <% end %>
+
+              <% @recent_food_donations.each do |donation| %>
+                <tr class="activity" data-timestamp="<%= donation.created_at.to_i %>">
+                  <td><span class="badge bg-success">New Donation</span></td>
+                  <td><%= donation.food_type %> - <%= donation.quantity %> units</td>
+                  <td><%= donation.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+                </tr>
+              <% end %>
+
+              <% @recent_claims.each do |claim| %>
+                <tr class="activity" data-timestamp="<%= claim.created_at.to_i %>">
+                  <td><span class="badge bg-warning text-dark">New Claim</span></td>
+                  <td>Claimed <%= claim.claimed_quantity %> units</td>
+                  <td><%= claim.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+                </tr>
+              <% end %>
+
+              <% @recent_feedbacks.each do |feedback| %>
+                <tr class="activity" data-timestamp="<%= feedback.created_at.to_i %>">
+                  <td><span class="badge bg-danger">New Feedback</span></td>
+                  <td>Rating: <%= feedback.rating %> - "<%= feedback.comment %>"</td>
+                  <td><%= feedback.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recent Activities</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        
+<% content_for :styles do %>
   <style>
-    /* Custom Styling */
-    body {
-      background-color: #121212;
-      color: white;
-      font-family: 'Arial', sans-serif;
+    .admin-dashboard {
+      background-color: #f8f9fa;
     }
-    .container {
-      margin-top: 30px;
+    
+    .card {
+      border: none;
+      transition: transform 0.2s ease-in-out;
     }
-    .table th, .table td {
-      color: #ffffff;
+    
+    .card:hover {
+      transform: translateY(-5px);
     }
-    .table thead {
-      background-color: #444;
+    
+    .bg-primary-light {
+      background-color: rgba(255, 255, 255, 0.2);
     }
-    .activity {
-      background-color: #333;
+    
+    .bg-danger-light {
+      background-color: rgba(255, 255, 255, 0.2);
     }
-    .dropdown {
-      margin-bottom: 20px;
+    
+    .table th {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.85rem;
     }
-    .dropdown-menu {
-      background-color: #444;
+    
+    .badge {
+      padding: 0.5em 0.75em;
+    }
+    
+    .form-select {
+      min-width: 150px;
     }
   </style>
-</head>
-<body>
+<% end %>
 
-<div class="container">
-  <h2 class="text-center text-white">Recent Activities</h2>
-
-  <!-- Filter Dropdown -->
-  <div class="dropdown">
-    <label for="activity_filter" class="text-white">Filter Activities</label>
-    <select id="activity_filter" class="custom-select">
-      <option value="all">All</option>
-      <option value="24_hours">Last 24 Hours</option>
-      <option value="week">This Week</option>
-    </select>
-  </div>
-
-  <!-- Table for Recent Activities -->
-  <table class="table table-striped table-dark">
-    <thead>
-      <tr>
-        <th>Activity</th>
-        <th>Details</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @recent_donors.each do |donor| %>
-        <tr class="activity" data-timestamp="<%= donor.created_at.to_i %>">
-          <td>New Donor Registered</td>
-          <td><%= donor.name %> (<%= donor.email %>)</td>
-          <td><%= donor.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-        </tr>
-      <% end %>
-
-      <% @recent_ngos.each do |ngo| %>
-        <tr class="activity" data-timestamp="<%= ngo.created_at.to_i %>">
-          <td>New NGO Registered</td>
-          <td><%= ngo.name %> (<%= ngo.email %>)</td>
-          <td><%= ngo.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-        </tr>
-      <% end %>
-
-      <% @recent_food_donations.each do |donation| %>
-        <tr class="activity" data-timestamp="<%= donation.created_at.to_i %>">
-          <td>New Food Donation</td>
-          <td><%= donation.food_type %> - <%= donation.quantity %> units</td>
-          <td><%= donation.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-        </tr>
-      <% end %>
-
-      <% @recent_claims.each do |claim| %>
-        <tr class="activity" data-timestamp="<%= claim.created_at.to_i %>">
-          <td>Food Claim Made</td>
-          <td>Claimed <%= claim.claimed_quantity %> units</td>
-          <td><%= claim.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-        </tr>
-      <% end %>
-
-      <% @recent_feedbacks.each do |feedback| %>
-        <tr class="activity" data-timestamp="<%= feedback.created_at.to_i %>">
-          <td>New User Feedback</td>
-          <td>Rating: <%= feedback.rating %> - "<%= feedback.comment %>"</td>
-          <td><%= feedback.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-<!-- Bootstrap JS & jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script>
-document.getElementById("activity_filter").addEventListener("change", function() {
-  let filter = this.value;
-  let now = Math.floor(Date.now() / 1000);
-  
-  document.querySelectorAll(".activity").forEach(row => {
-    let timestamp = parseInt(row.getAttribute("data-timestamp"));
-    let showRow = false;
-
-    if (filter === "all") {
-      showRow = true;
-    } else if (filter === "24_hours" && (now - timestamp) <= 86400) {
-      showRow = true;
-    } else if (filter === "week" && (now - timestamp) <= 604800) {
-      showRow = true;
-    }
-
-    row.style.display = showRow ? "" : "none";
-  });
-});
-</script>
-
-</body>
-</html>
-<!-- app/views/admins/index.html.erb (or wherever you want to add the link) -->
-<h1>Admin Dashboard</h1>
-
-<!-- Link to the reports page -->
-<%= link_to "View Donation & Claim Reports", reports_admins_path, class: "btn btn-primary" %>
-
-
-<% if admin_signed_in? %>
-  <%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, class: "btn btn-danger mt-3" %>
-<% else %>
-  <%= button_to 'Sign In', new_admin_session_path, class: "btn btn-success mt-3" %>
+<% content_for :head do %>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <% end %>

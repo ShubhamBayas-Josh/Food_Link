@@ -195,6 +195,7 @@
                             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control input_user", placeholder: "Enter your email" %>
                         </div>
 
+
                         <div class="input-group mb-3">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -217,17 +218,15 @@
 
                     <div class="mt-4 text-center">
                         <div class="d-flex justify-content-center links">
-                            Forgot your password? <%= link_to "Reset it here", new_password_path(resource_name) %>
+                            Forgot your password?  <%= link_to "Reset it here", new_password_path(resource_name) %>
                         </div>
                         <div class="d-flex justify-content-center links">
-                            New here? <%= link_to "Sign Up", new_registration_path(resource_name) %>
+                            New here?  <%= link_to "Sign Up", new_registration_path(resource_name) %>
                         </div>
-                    </div>
+                   </div><br><br>
                 </div>
             </div>
         </div>
     </div>
-    <div id="liveAlertPlaceholder"></div>
-<button type="button" class="btn btn-primary" id="liveAlertBtn">Show live alert</button>
 </body>
 </html>
