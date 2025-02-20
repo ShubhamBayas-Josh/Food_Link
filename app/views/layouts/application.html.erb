@@ -19,7 +19,9 @@
   </head>
 
   <body>
-    <%= render 'shared/navbar' %>
+    <% unless controller_name == 'sessions' && action_name == 'new' || controller_name == 'registrations' && action_name == 'new' %>
+      <%= render 'shared/navbar' %>
+    <% end %>
     <%# <%= render 'shared/sidenavbar' %> 
     <%# <%= render 'shared/sidenavbar' %> 
     <%= yield %>
