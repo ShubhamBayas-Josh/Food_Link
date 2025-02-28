@@ -1,4 +1,7 @@
 class Api::V1::FoodTransactionsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  before_action :set_food_transaction, only: [ :show, :update, :destroy ]
+
   def index
     @food_transactions = FoodTransaction.all
     render json: @food_transactions, status: :ok
@@ -13,7 +16,7 @@ class Api::V1::FoodTransactionsController < ApplicationController
   end
 
   def create
-    @food_transaction = food_transaction.new(food_transaction_params)
+    @food_transaction = FoodTransaction.new(food_transaction_params)
     if @food_transaction.save
       render json: @food_transaction, status: :created
     else
@@ -41,13 +44,13 @@ class Api::V1::FoodTransactionsController < ApplicationController
   private
 
   def set_food_transaction
-    @food_transaction = food_transaction.find_by(id: params[:id])
+    @food_transaction = FoodTransaction.find_by(id: params[:id])
     if @food_transaction.nil?
       render json: { error: "food_transaction not found" }, status: :not_found
     end
   end
 
   def food_transaction_params
-    params.permit(:id, :name, :email, :password, :address, :organization_type)
+  params.permit(:id, :food_type, :quantity, :description, :transaction_type, :status, :expiration_date, :user_id, :address)
   end
 end

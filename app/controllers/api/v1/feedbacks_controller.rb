@@ -1,4 +1,7 @@
 class Api::V1::FeedbacksController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [ :create, :destroy, :update ]
+  before_action :set_feedback, only: [ :show, :update, :destroy ]
+
   def index
     @feedbacks = Feedback.all
     render json: @feedbacks, status: :ok
@@ -12,6 +15,7 @@ class Api::V1::FeedbacksController < ApplicationController
     end
   end
 
+
   def create
     @feedback = Feedback.new(feedback_params)
     if @feedback.save
@@ -22,12 +26,8 @@ class Api::V1::FeedbacksController < ApplicationController
   end
 
   def destroy
-    if @feedback.feedbacks.exists? || @feedback.food_claims.exists? || @feedback.food_transactions.exists? || @feedback.notifications.exists?
-      render json: { error: "Cannot delete feedback with associated records" }, status: :unprocessable_entity
-    else
-      @feedback.destroy
-      render json: { message: "feedback deleted successfully" }, status: :ok
-    end
+    @feedback.destroy
+    render json: { message: "feedback deleted successfully" }, status: :ok
   end
 
   def update
@@ -48,6 +48,6 @@ class Api::V1::FeedbacksController < ApplicationController
   end
 
   def feedback_params
-    params.permit(:id, :name, :email, :password, :address, :organization_type)
+    params.permit(:id, :rating, :comment, :user_id, :food_transaction_id, :created_by_id)
   end
 end

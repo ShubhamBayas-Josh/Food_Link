@@ -1,3 +1,10 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <% if current_admin %>
+          <p class="admin-welcome">Welcome back, <%= current_admin.name %></p>
+        <% end %>
+      </div>
+    </div>
 <%= content_for :title, "Donation & Claim Reports" %>
 
 <h1>Donation & Claim Reports</h1>
@@ -10,7 +17,3 @@
 
 <h3>NGO Donation Activity</h3>
 <canvas id="ngoDonationActivity"></canvas>
-
-<script>
-
-</script>

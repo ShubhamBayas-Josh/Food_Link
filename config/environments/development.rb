@@ -91,4 +91,6 @@ Rails.application.configure do
   user_name: "shubhamstorage17@gmail.com", # Set this in your environment variables
   password: "sieljsnohnywezle"
 }
+
+config.hosts << "localhost"
 end

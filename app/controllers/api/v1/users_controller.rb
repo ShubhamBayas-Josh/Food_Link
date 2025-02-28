@@ -1,6 +1,5 @@
-class Api::V1::UsersController < Api::V1::ApplicationController # rubocop:disable Style/ColonMethodCall
-  # before_action :authenticate_request, only: [ :index, :show, :update, :destroy ]
-  before_action :set_user, only: [ :show, :update, :destroy ]
+class Api::V1::UsersController < Api::V1::ApplicationController
+  before_action :set_user, only: [ :show, :update, :destroy, :approve ]
 
   def index
     @users = User.all
@@ -16,7 +15,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController # rubocop:disabl
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params.merge(is_approved: false)) # default is_approved to false
     if @user.save
       render json: @user, status: :created
     else
@@ -41,6 +40,15 @@ class Api::V1::UsersController < Api::V1::ApplicationController # rubocop:disabl
     end
   end
 
+  def approve
+    if current_user.admin?  # only admin can approve users
+      @user.update(is_approved: true)
+      render json: { message: "User approved successfully" }, status: :ok
+    else
+      render json: { error: "You are not authorized to approve users" }, status: :forbidden
+    end
+  end
+
   private
 
   def set_user
@@ -51,6 +59,6 @@ class Api::V1::UsersController < Api::V1::ApplicationController # rubocop:disabl
   end
 
   def user_params
-    params.permit(:id, :name, :email, :password, :address, :organization_type)
+    params.permit(:id, :name, :email, :password, :address, :organization_type, :role)
   end
 end

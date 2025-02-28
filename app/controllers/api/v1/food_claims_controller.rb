@@ -1,4 +1,7 @@
 class Api::V1::FoodClaimsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  before_action :set_food_claim, only: [ :show, :update, :destroy ]
+
   def index
     @food_claims = FoodClaim.all
     render json: @food_claims, status: :ok
@@ -22,12 +25,8 @@ class Api::V1::FoodClaimsController < ApplicationController
   end
 
   def destroy
-    if @food_claim.feedbacks.exists? || @food_claim.food_claims.exists? || @food_claim.food_transactions.exists? || @food_claim.notifications.exists?
-      render json: { error: "Cannot delete food_claim with associated records" }, status: :unprocessable_entity
-    else
-      @food_claim.destroy
-      render json: { message: "food_claim deleted successfully" }, status: :ok
-    end
+    @food_claim.destroy
+    render json: { message: "food_claim deleted successfully" }, status: :ok
   end
 
   def update
@@ -48,6 +47,6 @@ class Api::V1::FoodClaimsController < ApplicationController
   end
 
   def food_claim_params
-    params.permit(:id, :name, :email, :password, :address, :organization_type)
+    params.permit(:id, :claimed_quantity, :claim_status, :food_transaction_id, :user_id, :creator_user_id)
   end
 end

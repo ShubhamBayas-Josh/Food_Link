@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :role, presence: true
   validates :address, presence: true
+  validates :is_approved, inclusion: { in: [ true, false ] }
 
   # Associations with dependent: :destroy
   has_many :feedbacks, dependent: :destroy
