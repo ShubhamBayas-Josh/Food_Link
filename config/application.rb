@@ -16,12 +16,15 @@ module FoodLink
       allow do
         origins "http://localhost:5173",
           "https://*.postman.com",
+          "http://127.0.0.1:3000",
           "https://localhost:3000"
-        resource "/api/v1/*",
+        resource "/api/*",
           headers: :any,
           methods: [ :get, :post, :options, :delete ]
       end
     end
+
+
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

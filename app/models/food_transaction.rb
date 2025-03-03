@@ -1,6 +1,6 @@
 class FoodTransaction < ApplicationRecord
   # Define expected statuses and transaction types
-  TRANSACTION_STATUSES = [ "pending", "completed", "cancelled", "expired" ].freeze
+  TRANSACTION_STATUSES = [ "pending", "completed", "cancelled", "expired", "in_progress" ].freeze
   TRANSACTION_TYPES = [ "offer", "request" ].freeze
 
   # Validations

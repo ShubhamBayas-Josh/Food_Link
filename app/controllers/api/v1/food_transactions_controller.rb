@@ -1,5 +1,6 @@
-class Api::V1::FoodTransactionsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::V1::FoodTransactionsController < Api::V1::ApplicationController
+  # skip_before_action :verify_authenticity_token
+  before_action :authorize_request
   before_action :set_food_transaction, only: [ :show, :update, :destroy ]
 
   def index

@@ -1,5 +1,8 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
   before_action :set_user, only: [ :show, :update, :destroy, :approve ]
+  # before_action :authorize_request
+  before_action :authorize_request
+
 
   def index
     @users = User.all

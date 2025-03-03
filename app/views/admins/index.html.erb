@@ -19,7 +19,7 @@
         <% end %>
       </div>
       <div>
-        <%= link_to "View Reports", reports_admins_path, class: "btn btn-primary" %>
+        <%= link_to "Approve Users", reports_admins_path, class: "btn btn-primary" %>
       </div>
     </div>
 
@@ -51,7 +51,7 @@
               <div class="stat-details">
                 <span>Pending: <%= @pending_donations %></span>
                 <span>Accepted: <%= @accepted_donations %></span>
-                <span>Rejected: <%= @rejected_donations %></span>
+                <span>In Progress: <%= @rejected_donations %></span>
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@
               <div class="stat-details">
                 <span>Pending: <%= @pending_claims %></span>
                 <span>Accepted: <%= @accepted_claims %></span>
-                <span>Rejected: <%= @rejected_claims %></span>
+                <span>In Progress: <%= @rejected_claims %></span>
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@
               <i class="fas fa-gift"></i>
             </div>
             <h5>Manage Donations</h5>
-            <p>View and approve new food donation requests.</p>
+            <p>View all Available donation</p>
             <a href="<%= donations_path %>" class="btn btn-outline-primary">View Donations</a>
           </div>
         </div>
@@ -126,9 +126,9 @@
             <div class="action-icon">
               <i class="fas fa-chart-line"></i>
             </div>
-            <h5>Reports & Analytics</h5>
-            <p>Generate reports and track donation trends.</p>
-            <a href="<%= reports_admins_path %>" class="btn btn-outline-primary">View Reports</a>
+            <h5>Approve Users</h5>
+            <p>View and approve new food donation requests.</p>
+            <a href="<%= reports_admins_path %>" class="btn btn-outline-primary">Approve Users</a>
           </div>
         </div>
       </div>

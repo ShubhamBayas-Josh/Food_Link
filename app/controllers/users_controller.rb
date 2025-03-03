@@ -41,6 +41,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def approve_user
+    user = User.find(params[:id])
+    if user.update_column(:is_approved, true)
+      flash[:notice] = "#{user.name} has been approved!"
+    else
+      flash[:alert] = "Error approving user."
+    end
+    redirect_to request.referer || users_path
+  end
+
   def destroy
     if @user.destroy
       redirect_to users_path, notice: "User was successfully deleted."

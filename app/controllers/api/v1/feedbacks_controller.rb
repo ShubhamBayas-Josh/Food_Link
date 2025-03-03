@@ -1,6 +1,8 @@
-class Api::V1::FeedbacksController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [ :create, :destroy, :update ]
+class Api::V1::FeedbacksController < Api::V1::ApplicationController
+  # skip_before_action :verify_authenticity_token, only: [ :create, :destroy, :update ]
   before_action :set_feedback, only: [ :show, :update, :destroy ]
+  before_action :authorize_request
+
 
   def index
     @feedbacks = Feedback.all
