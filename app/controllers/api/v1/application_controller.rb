@@ -6,8 +6,13 @@ class Api::V1::ApplicationController < ActionController::API
   end
 
   def not_found
-    render json: { error: "not_found" }
+    render json: { error: "not_found" }, status: :not_found
   end
+
+  def current_user
+    @current_user
+  end
+
 
   def authorize_request
     header = request.headers["Authorization"]

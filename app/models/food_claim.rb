@@ -9,4 +9,6 @@ class FoodClaim < ApplicationRecord
   belongs_to :creator_user, class_name: "User"
 
   validates :creator_user, presence: true
+  enum :claim_status, { "pending" => "pending", "approved" => "approved", "rejected" => "rejected", "in_progress" => "in_progress" }
+  validates :claimed_quantity, presence: true, format: { with: /\A[1-9][0-9]*\z/, message: "must be a positive integer" }
 end

@@ -19,7 +19,7 @@ class AdminsController < ApplicationController
     @total_donations = FoodTransaction.count
     @pending_donations = FoodTransaction.where(status: "pending").count
     @accepted_donations = FoodTransaction.where(status: "accepted").count
-    @rejected_donations = FoodTransaction.where(status: "rejected").count
+    @in_progress_donations = FoodTransaction.where(status: "in_progress").count
 
     @total_claims = FoodClaim.count
     @pending_claims = FoodClaim.where(claim_status: "pending").count
@@ -34,18 +34,9 @@ class AdminsController < ApplicationController
     @users = User.where(is_approved: false)
   end
 
-
-  # GET /admins/1 or /admins/1.json
-  def show
-  end
-
   # GET /admins/new
   def new
     @admin = Admin.new
-  end
-
-  # GET /admins/1/edit
-  def edit
   end
 
   # POST /admins or /admins.json

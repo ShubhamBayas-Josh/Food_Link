@@ -34,8 +34,6 @@ Rails.application.routes.draw do
   #   post "/signup", to: "users#create"
   # end
 
-
-
   namespace :api do
     namespace :v1 do
       resources :users, only: [ :index, :show, :create, :update, :destroy ]
@@ -47,9 +45,6 @@ Rails.application.routes.draw do
       post "/auth/signup", to: "authentication#signup"
     end
   end
-
-
-
 
 
   resources :orders

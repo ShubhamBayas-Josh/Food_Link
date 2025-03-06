@@ -16,12 +16,12 @@ class DonationsController < ApplicationController
       @total_donations = FoodTransaction.count
       @pending_donations = FoodTransaction.where(status: "pending").count
       @accepted_donations = FoodTransaction.where(status: "accepted").count
-      @rejected_donations = FoodTransaction.where(status: "rejected").count
+      @in_progress_donations = FoodTransaction.where(status: "in_progress").count
 
       @total_claims = FoodClaim.count
       @pending_claims = FoodClaim.where(claim_status: "pending").count
       @accepted_claims = FoodClaim.where(claim_status: "accepted").count
-      @rejected_claims = FoodClaim.where(claim_status: "rejected").count
+      @in_progress_claims = FoodClaim.where(claim_status: "in_progress").count
 
       @feedback_count = Feedback.count
       @food_wastage_reduced = FoodTransaction.where(status: "accepted").sum(:quantity) # Assuming 'quantity' is a column

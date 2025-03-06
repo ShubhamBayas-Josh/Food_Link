@@ -45,7 +45,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
   def approve
     if current_user.admin?  # only admin can approve users
-      @user.update(is_approved: true)
+      @user.update_column(:is_approved, true)
       render json: { message: "User approved successfully" }, status: :ok
     else
       render json: { error: "You are not authorized to approve users" }, status: :forbidden

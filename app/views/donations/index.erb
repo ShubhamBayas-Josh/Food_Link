@@ -1,5 +1,5 @@
 <!-- Add Font Awesome CDN in the head section -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheets" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <div class="admin-dashboard">
   <% if notice %>
@@ -44,11 +44,11 @@
             </div>
             <div class="stat-card-info">
               <h6>Food Donations</h6>
-              <h2><%= @pending_donations + @accepted_donations + @rejected_donations %></h2>
+              <h2><%= @pending_donations + @accepted_donations + @in_progress_donations %></h2>
               <div class="stat-details">
                 <span>Pending: <%= @pending_donations %></span>
                 <span>Accepted: <%= @accepted_donations %></span>
-                <span>Rejected: <%= @rejected_donations %></span>
+                <span>Rejected: <%= @in_progress_donations %></span>
               </div>
             </div>
           </div>
@@ -63,11 +63,11 @@
             </div>
             <div class="stat-card-info">
               <h6>Total Claims</h6>
-              <h2><%= @pending_claims + @accepted_claims + @rejected_claims %></h2>
+              <h2><%= @pending_claims + @accepted_claims + @in_progress_claims %></h2>
               <div class="stat-details">
                 <span>Pending: <%= @pending_claims %></span>
                 <span>Accepted: <%= @accepted_claims %></span>
-                <span>Rejected: <%= @rejected_claims %></span>
+                <span>Rejected: <%= @in_progress_claims %></span>
               </div>
             </div>
           </div>

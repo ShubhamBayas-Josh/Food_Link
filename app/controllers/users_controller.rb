@@ -42,14 +42,19 @@ class UsersController < ApplicationController
   end
 
   def approve_user
-    user = User.find(params[:id])
-    if user.update_column(:is_approved, true)
-      flash[:notice] = "#{user.name} has been approved!"
-    else
-      flash[:alert] = "Error approving user."
+    user = User.find_by(id: params[:id]) # Use `find_by` to avoid exception
+    if user.nil?
+      redirect_to users_path, alert: "User not found"
+      return
     end
-    redirect_to request.referer || users_path
+
+    if user.update_column(:is_approved, true)
+      redirect_to users_path, notice: "User approved successfully"
+    else
+      redirect_to users_path, alert: "Error approving user."
+    end
   end
+
 
   def destroy
     if @user.destroy
@@ -63,6 +68,9 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "User not found"
+    redirect_to users_path
   end
 
   def user_params

@@ -11,9 +11,12 @@ class FoodTransaction < ApplicationRecord
   validates :transaction_type, presence: true, inclusion: { in: TRANSACTION_TYPES, message: "%{value} is not a valid transaction type" }
   validates :status, presence: true, inclusion: { in: TRANSACTION_STATUSES, message: "%{value} is not a valid status" }
   validates :expiration_date, presence: true
+  validates :user_id, presence: true
+
 
   # Associations
   belongs_to :user
   has_many :feedbacks
   has_many :food_claims
+  has_many :notifications, dependent: :destroy
 end

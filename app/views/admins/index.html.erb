@@ -47,11 +47,11 @@
             </div>
             <div class="stat-card-info">
               <h6>Food Donations</h6>
-              <h2><%= @pending_donations + @accepted_donations + @rejected_donations %></h2>
+              <h2><%= @pending_donations + @accepted_donations + @in_progress_donations %></h2>
               <div class="stat-details">
                 <span>Pending: <%= @pending_donations %></span>
                 <span>Accepted: <%= @accepted_donations %></span>
-                <span>In Progress: <%= @rejected_donations %></span>
+                <span>In Progress: <%= @in_progress_donations %></span>
               </div>
             </div>
           </div>
