@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
   def index
+    @user=User.all
     # Fetch recent donors
     @recent_donors = Donor.order(created_at: :desc).limit(10)
 

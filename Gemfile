@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "versionist"
 
+gem "rails_charts"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -27,6 +28,9 @@ gem "jbuilder"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
+group :test do
+  gem 'database_cleaner-active_record'
+end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
@@ -62,3 +66,19 @@ end
 gem "jsbundling-rails", "~> 1.3"
 
 gem "devise", "~> 4.9"
+
+gem "rack-cors", "~> 2.0"
+
+gem "bcrypt", "~> 3.1"
+
+group :test do
+  gem "shoulda-matchers", "~> 5.0"
+end
+gem "faker"
+source "https://rubygems.org"
+
+gem "stringio", "3.1.2"
+gem "simplecov", require: false, group: :test
+
+gem "factory_bot", "~> 6.5"
+gem "factory_bot_rails"

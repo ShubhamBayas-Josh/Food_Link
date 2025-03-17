@@ -1,7 +1,28 @@
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
+RSpec.configure do |config|
+  config.include Warden::Test::Helpers
+  config.before(:each) { Warden.test_mode! }
+  config.after(:each) { Warden.test_reset! }
+end
+
+require 'rspec/rails'
+require 'factory_bot_rails'
+
+RSpec.configure do |config|
+  # Include FactoryBot methods
+  config.include FactoryBot::Syntax::Methods
+end
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 # Uncomment the line below in case you have `--require rails_helper` in the `.rspec` file
@@ -9,7 +30,34 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # return unless Rails.env.test?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+#
 
+require 'simplecov'
+SimpleCov.start
+RSpec.configure do |config|
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  RSpec.configure do |config|
+    config.before(:each) do
+      Faker::UniqueGenerator.clear
+    end
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+end
+
+
+require 'database_cleaner/active_record'
+
+
+# Previous content of test helper now starts here
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

@@ -1,41 +1,57 @@
+<!-- Add Font Awesome CDN in the head section -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<div class="admin-dashboard bg-light min-vh-100">
+<div class="admin-dashboard">
   <% if notice %>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <%= notice %>
-      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
 
-  <div class="container-fluid py-4">
+  <div class="container-fluid px-4 py-4">
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h1 class="h3 mb-0 text-gray-800">Admin Dashboard</h1>
+        <h1 class="dashboard-title">Admin Dashboard</h1>
         <% if current_admin %>
-          <p class="text-muted">Welcome back, <%= current_admin.name %></p>
+          <p class="admin-welcome">Welcome back, <%= current_admin.name %></p>
         <% end %>
       </div>
       <div>
-        <%= link_to "View Reports", reports_admins_path, class: "btn btn-outline-primary me-2" %>
-        
+        <%= link_to "Approve Users", reports_admins_path, class: "btn btn-primary" %>
       </div>
     </div>
 
     <!-- Stats Cards -->
-    <div class="row g-3 mb-4">
+    <div class="row g-4 mb-4">
       <div class="col-md-3">
-        <div class="card bg-primary h-100 shadow-sm">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <h6 class="card-title text-white-50">Total Users</h6>
-                <h2 class="display-6 mb-0 text-white"><%= @users_count %></h2>
-              </div>
-              <div class="rounded-circle bg-primary-light p-2">
-                <i class="fas fa-users fa-2x text-white"></i>
+        <div class="stat-card total-users">
+          <div class="stat-card-body">
+            <div class="stat-card-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-card-info">
+              <h6>Total Users</h6>
+              <h2><%= @users_count %></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="stat-card donations">
+          <div class="stat-card-body">
+            <div class="stat-card-icon">
+              <i class="fas fa-gift"></i>
+            </div>
+            <div class="stat-card-info">
+              <h6>Food Donations</h6>
+              <h2><%= @pending_donations + @accepted_donations + @in_progress_donations %></h2>
+              <div class="stat-details">
+                <span>Pending: <%= @pending_donations %></span>
+                <span>Accepted: <%= @accepted_donations %></span>
+                <span>In Progress: <%= @in_progress_donations %></span>
               </div>
             </div>
           </div>
@@ -43,244 +59,601 @@
       </div>
 
       <div class="col-md-3">
-        <div class="card bg-success h-100 shadow-sm">
-          <div class="card-body">
-            <h6 class="card-title text-white-50">Food Donations</h6>
-            <h2 class="display-6 mb-2 text-white"><%= @pending_donations + @accepted_donations + @rejected_donations %></h2>
-            <div class="text-white-50 small">
-              <span class="me-2">Pending: <%= @pending_donations %></span>
-              <span class="me-2">Accepted: <%= @accepted_donations %></span>
-              <span>Rejected: <%= @rejected_donations %></span>
+        <div class="stat-card claims">
+          <div class="stat-card-body">
+            <div class="stat-card-icon">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <div class="stat-card-info">
+              <h6>Total Claims</h6>
+              <h2><%= @pending_claims + @accepted_claims + @rejected_claims %></h2>
+              <div class="stat-details">
+                <span>Pending: <%= @pending_claims %></span>
+                <span>Accepted: <%= @accepted_claims %></span>
+                <span>In Progress: <%= @rejected_claims %></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-md-3">
-        <div class="card bg-warning h-100 shadow-sm">
-          <div class="card-body">
-            <h6 class="card-title text-white-50">Total Claims</h6>
-            <h2 class="display-6 mb-2 text-white"><%= @pending_claims + @accepted_claims + @rejected_claims %></h2>
-            <div class="text-white-50 small">
-              <span class="me-2">Pending: <%= @pending_claims %></span>
-              <span class="me-2">Accepted: <%= @accepted_claims %></span>
-              <span>Rejected: <%= @rejected_claims %></span>
+        <div class="stat-card feedback">
+          <div class="stat-card-body">
+            <div class="stat-card-icon">
+              <i class="fas fa-comments"></i>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="card bg-danger h-100 shadow-sm">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <h6 class="card-title text-white-50">Total Feedbacks</h6>
-                <h2 class="display-6 mb-0 text-white"><%= @feedback_count %></h2>
-              </div>
-              <div class="rounded-circle bg-danger-light p-2">
-                <i class="fas fa-comments fa-2x text-white"></i>
-              </div>
+            <div class="stat-card-info">
+              <h6>Total Feedbacks</h6>
+              <h2><%= @feedback_count %></h2>
             </div>
           </div>
         </div>
       </div>
     </div>
-  <div class="row mt-4">
+
     <!-- Quick Actions -->
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body text-center">
-          <h5 class="card-title">Manage Donations</h5>
-          <p class="card-text">View and approve new food donation requests.</p>
-          <a href="#" class="btn btn-primary">View Donations</a>
+    <div class="row g-4 mb-4">
+      <div class="col-md-4">
+        <div class="action-card">
+          <div class="action-card-body">
+            <div class="action-icon">
+              <i class="fas fa-gift"></i>
+            </div>
+            <h5>Manage Donations</h5>
+            <p>View all Available donation</p>
+            <a href="<%= donations_path %>" class="btn btn-outline-primary">View Donations</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+      <div class="action-card">
+          <div class="action-card-body">
+            <div class="action-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h5>User Management</h5>
+            <p>Manage NGO representatives and volunteers.</p>
+            <a href="<%= users_path %>" class="btn btn-outline-primary">Manage Users</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="action-card">
+          <div class="action-card-body">
+            <div class="action-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h5>Approve Users</h5>
+            <p>View and approve new food donation requests.</p>
+            <a href="<%= reports_admins_path %>" class="btn btn-outline-primary">Approve Users</a>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body text-center">
-          <h5 class="card-title">User Management</h5>
-          <p class="card-text">Manage NGO representatives and volunteers.</p>
-          <a href="<%= users_path %>" class="btn btn-primary">Manage Users</a> </div>
-      </div>
+    <!-- Rest of the code remains exactly the same -->
+   <!-- Replace the existing Recent Activities Section with this code -->
+<div class="activities-card">
+  <div class="activities-header">
+    <div class="activities-title">
+      <h5><i class="fas fa-history me-2"></i>Recent Activities</h5>
+      <p class="text-muted">Track all recent system activities</p>
     </div>
-
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body text-center">
-          <h5 class="card-title">Reports & Analytics</h5>
-          <p class="card-text">Generate reports and track donation trends.</p>
-          <a href="<%= reports_admins_path %>" class="btn btn-primary">View Reports</a>
-        </div>
-      </div>
+    <div class="activities-filter">
+      <select id="activity_filter" class="form-select">
+        <option value="all">All Time</option>
+        <option value="24_hours">Last 24 Hours</option>
+        <option value="week">This Week</option>
+      </select>
     </div>
   </div>
+  <div class="activities-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th width="20%">Activity Type</th>
+            <th width="50%">Details</th>
+            <th width="30%">Date & Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @recent_donors.each do |donor| %>
+            <tr class="activity" data-timestamp="<%= donor.created_at.to_i %>">
+              <td>
+                <div class="activity-type">
+                  <span class="badge bg-info">
+                    <i class="fas fa-user-plus me-1"></i> New Donor
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-details">
+                  <strong><%= donor.name %></strong>
+                  <span class="text-muted">(<%= donor.email %>)</span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-time">
+                  <i class="far fa-clock me-1"></i>
+                  <%= donor.created_at.strftime("%d %b %Y, %I:%M %p") %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+
+          <% @recent_ngos.each do |ngo| %>
+            <tr class="activity" data-timestamp="<%= ngo.created_at.to_i %>">
+              <td>
+                <div class="activity-type">
+                  <span class="badge bg-primary">
+                    <i class="fas fa-building me-1"></i> New NGO
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-details">
+                  <strong><%= ngo.name %></strong>
+                  <span class="text-muted">(<%= ngo.email %>)</span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-time">
+                  <i class="far fa-clock me-1"></i>
+                  <%= ngo.created_at.strftime("%d %b %Y, %I:%M %p") %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+
+          <% @recent_food_donations.each do |donation| %>
+            <tr class="activity" data-timestamp="<%= donation.created_at.to_i %>">
+              <td>
+                <div class="activity-type">
+                  <span class="badge bg-success">
+                    <i class="fas fa-gift me-1"></i> New Donation
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-details">
+                  <strong><%= donation.food_type %></strong>
+                  <span class="text-muted"><%= donation.quantity %> units</span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-time">
+                  <i class="far fa-clock me-1"></i>
+                  <%= donation.created_at.strftime("%d %b %Y, %I:%M %p") %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+
+          <% @recent_claims.each do |claim| %>
+            <tr class="activity" data-timestamp="<%= claim.created_at.to_i %>">
+              <td>
+                <div class="activity-type">
+                  <span class="badge bg-warning">
+                    <i class="fas fa-hand-holding-heart me-1"></i> New Claim
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-details">
+                  <strong>Claimed <%= claim.claimed_quantity %> units</strong>
+                </div>
+              </td>
+              <td>
+                <div class="activity-time">
+                  <i class="far fa-clock me-1"></i>
+                  <%= claim.created_at.strftime("%d %b %Y, %I:%M %p") %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+
+          <% @recent_feedbacks.each do |feedback| %>
+            <tr class="activity" data-timestamp="<%= feedback.created_at.to_i %>">
+              <td>
+                <div class="activity-type">
+                  <span class="badge bg-danger">
+                    <i class="fas fa-comments me-1"></i> New Feedback
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="activity-details">
+                  <div class="rating">
+                    <% feedback.rating.times do %>
+                      <i class="fas fa-star text-warning"></i>
+                    <% end %>
+                    <% (5 - feedback.rating).times do %>
+                      <i class="far fa-star text-muted"></i>
+                    <% end %>
+                  </div>
+                  <p class="feedback-comment mb-0 mt-1"><%= feedback.comment %></p>
+                </div>
+              </td>
+              <td>
+                <div class="activity-time">
+                  <i class="far fa-clock me-1"></i>
+                  <%= feedback.created_at.strftime("%d %b %Y, %I:%M %p") %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<br><br>
+        <%= render 'shared/footer' %>
+
 <style>
-  /* Admin Dashboard Styles */
-  .dashboard-container {
-    padding: 20px;
+/* Add these styles to your existing CSS */
+.activities-card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  margin-top: 30px;
+}
+
+.activities-header {
+  padding: 25px 30px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activities-title h5 {
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.activities-title p {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.activities-filter .form-select {
+  min-width: 180px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  font-size: 14px;
+  background-color: #f8f9fa;
+}
+
+.activities-body {
+  padding: 0;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.table td {
+  padding: 20px 30px;
+  vertical-align: middle;
+}
+
+.activity-type {
+  display: flex;
+  align-items: center;
+}
+
+.badge {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.activity-details {
+  font-size: 14px;
+}
+
+.activity-details strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.activity-details .text-muted {
+  font-size: 13px;
+}
+
+.activity-time {
+  color: #6c757d;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+
+.rating {
+  font-size: 14px;
+}
+
+.feedback-comment {
+  color: #2c3e50;
+  font-size: 14px;
+  font-style: italic;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+/* Hover effect for table rows */
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+/* Custom scrollbar for table */
+.table-responsive {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f8f9fa;
+}
+
+.table-responsive::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 3px;
+}
+
+
+</style>
+
+<style>
+  /* All original styles remain exactly the same */
+  /* Main Dashboard Styles */
+  .admin-dashboard {
     background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 20px;
   }
 
   .dashboard-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
   }
 
-  /* Card Styling */
-  .dashboard-card {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  .admin-welcome {
+    color: #5a6268;
+    font-size: 15px;
+    margin-bottom: 0;
+  }
+
+  /* Stat Cards */
+  .stat-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    height: 100%;
+    transition: transform 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .stat-card-body {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  .stat-card-icon {
+    width: 60px;
+    height: 60px;
     border-radius: 12px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
   }
 
-  .dashboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  .stat-card-icon i {
+    font-size: 28px;
   }
 
-  .dashboard-card .card-body {
-    padding: 20px;
+  /* Updated color schemes for stat cards */
+  .total-users {
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
   }
 
-  .dashboard-card .card-title {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #007bff;
+  .total-users .stat-card-icon {
+    background: rgba(255, 255, 255, 0.2);
   }
 
-  .dashboard-card .card-text {
-    font-size: 1rem;
-    color: #555;
+  .total-users .stat-card-icon i,
+  .total-users .stat-card-info h6,
+  .total-users .stat-card-info h2 {
+    color: #ffffff;
   }
 
-  .dashboard-card .btn {
-    margin-top: 10px;
-    font-weight: bold;
-    border-radius: 8px;
+  .donations {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
   }
 
-</style><br>
+  .donations .stat-card-icon {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
-    <!-- Recent Activities Section -->
-    <div class="card shadow-sm">
-      <div class="card-header bg-white">
-        <div class="d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">Recent Activities</h5>
-          <div class="w-auto">
-            <select id="activity_filter" class="form-select form-select-sm">
-              <option value="all">All Time</option>
-              <option value="24_hours">Last 24 Hours</option>
-              <option value="week">This Week</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Activity</th>
-                <th>Details</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @recent_donors.each do |donor| %>
-                <tr class="activity" data-timestamp="<%= donor.created_at.to_i %>">
-                  <td><span class="badge bg-info">New Donor</span></td>
-                  <td><%= donor.name %> (<%= donor.email %>)</td>
-                  <td><%= donor.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-                </tr>
-              <% end %>
+  .donations .stat-card-icon i,
+  .donations .stat-card-info h6,
+  .donations .stat-card-info h2,
+  .donations .stat-details {
+    color: #ffffff;
+  }
 
-              <% @recent_ngos.each do |ngo| %>
-                <tr class="activity" data-timestamp="<%= ngo.created_at.to_i %>">
-                  <td><span class="badge bg-primary">New NGO</span></td>
-                  <td><%= ngo.name %> (<%= ngo.email %>)</td>
-                  <td><%= ngo.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-                </tr>
-              <% end %>
+  .claims {
+    background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);
+  }
 
-              <% @recent_food_donations.each do |donation| %>
-                <tr class="activity" data-timestamp="<%= donation.created_at.to_i %>">
-                  <td><span class="badge bg-success">New Donation</span></td>
-                  <td><%= donation.food_type %> - <%= donation.quantity %> units</td>
-                  <td><%= donation.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-                </tr>
-              <% end %>
+  .claims .stat-card-icon {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
-              <% @recent_claims.each do |claim| %>
-                <tr class="activity" data-timestamp="<%= claim.created_at.to_i %>">
-                  <td><span class="badge bg-warning text-dark">New Claim</span></td>
-                  <td>Claimed <%= claim.claimed_quantity %> units</td>
-                  <td><%= claim.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-                </tr>
-              <% end %>
+  .claims .stat-card-icon i,
+  .claims .stat-card-info h6,
+  .claims .stat-card-info h2,
+  .claims .stat-details {
+    color: #ffffff;
+  }
 
-              <% @recent_feedbacks.each do |feedback| %>
-                <tr class="activity" data-timestamp="<%= feedback.created_at.to_i %>">
-                  <td><span class="badge bg-danger">New Feedback</span></td>
-                  <td>Rating: <%= feedback.rating %> - "<%= feedback.comment %>"</td>
-                  <td><%= feedback.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-        
-<% content_for :styles do %>
-  <style>
-    .admin-dashboard {
-      background-color: #f8f9fa;
-    }
-    
-    .card {
-      border: none;
-      transition: transform 0.2s ease-in-out;
-    }
-    
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    
-    .bg-primary-light {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    .bg-danger-light {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    .table th {
-      font-weight: 500;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-    }
-    
-    .badge {
-      padding: 0.5em 0.75em;
-    }
-    
-    .form-select {
-      min-width: 150px;
-    }
-  </style>
-<% end %>
+  .feedback {
+    background: linear-gradient(135deg, #e74c3c 0%, #f15f5f 100%);
+  }
 
-<% content_for :head do %>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<% end %>
+  .feedback .stat-card-icon {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .feedback .stat-card-icon i,
+  .feedback .stat-card-info h6,
+  .feedback .stat-card-info h2 {
+    color: #ffffff;
+  }
+
+  .stat-card-info h6 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .stat-card-info h2 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .stat-details {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  .stat-details span {
+    margin-right: 12px;
+  }
+
+  /* Action Cards */
+  .action-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    height: 100%;
+    transition: transform 0.2s;
+  }
+
+  .action-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .action-card-body {
+    padding: 30px;
+    text-align: center;
+  }
+
+  .action-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+
+  .action-icon i {
+    font-size: 32px;
+  }
+
+  /* Updated color schemes for action cards */
+  .action-card:nth-child(1) .action-icon {
+    background: rgba(52, 152, 219, 0.1);
+  }
+
+  .action-card:nth-child(1) .action-icon i {
+    color: #2980b9;
+  }
+
+  .action-card:nth-child(2) .action-icon {
+    background: rgba(46, 204, 113, 0.1);
+  }
+
+  .action-card:nth-child(2) .action-icon i {
+    color: #27ae60;
+  }
+
+  .action-card:nth-child(3) .action-icon {
+    background: rgba(243, 156, 18, 0.1);
+  }
+
+  .action-card:nth-child(3) .action-icon i {
+    color: #f39c12;
+  }
+
+  .action-card h5 {
+    color: #2c3e50;
+    font-size: 20px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .action-card p {
+    color: #5a6268;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  /* Activities Section */
+  .activities-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  }
+
+  .activities-header {
+    padding: 24px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .activities-header h5 {
+    color

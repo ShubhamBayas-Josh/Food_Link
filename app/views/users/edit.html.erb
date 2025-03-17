@@ -1,37 +1,92 @@
-<div class="container my-4">
+<div class="container my-5">
   <% action = @user.new_record? ? 'Create' : 'Update' %>
-  <h1 class="text-center mb-4"><%= action %> User</h1>
+  <h1 class="text-center mb-4 display-4 font-weight-bold text-primary"><%= action %> User</h1>
 
-  <%= form_with model: @user, local: true, class: 'w-50 mx-auto' do |form| %>
-    <div class="form-group">
-      <%= form.label :name, class: 'form-label' %>
-      <%= form.text_field :name, required: true, class: 'form-control' %>
+  <div class="card shadow-sm w-75 mx-auto">
+    <div class="card-header bg-primary text-white">
+      <h5 class="card-title mb-0"><%= action %> User Details</h5>
     </div>
+    <div class="card-body">
+      <%= form_with model: @user, local: true, class: 'needs-validation', novalidate: true do |form| %>
+        <div class="form-group mb-4">
+          <%= form.label :name, class: 'form-label fw-bold' %>
+          <%= form.text_field :name, required: true, class: 'form-control p-3', placeholder: 'Enter full name' %>
+        </div>
 
-    <div class="form-group">
-      <%= form.label :email, class: 'form-label' %>
-      <%= form.email_field :email, required: true, class: 'form-control' %>
+        <div class="form-group mb-4">
+          <%= form.label :email, class: 'form-label fw-bold' %>
+          <%= form.email_field :email, required: true, class: 'form-control p-3', placeholder: 'Enter email address' %>
+        </div>
+
+        <div class="form-group mb-4">
+          <%= form.label :password, class: 'form-label fw-bold' %>
+          <%= form.password_field :password, required: true, class: 'form-control p-3', placeholder: 'Enter password' %>
+        </div>
+
+        <div class="form-group mb-4">
+          <%= form.label :role, class: 'form-label fw-bold' %>
+          <%= form.text_field :role, required: true, class: 'form-control p-3', placeholder: 'Enter role' %>
+        </div>
+
+        <div class="form-group mb-4">
+          <%= form.label :address, class: 'form-label fw-bold' %>
+          <%= form.text_area :address, rows: 3, required: true, class: 'form-control p-3', placeholder: 'Enter address' %>
+        </div>
+
+        <div class="form-group text-center mt-4">
+          <%= form.submit action, class: 'btn btn-primary btn-lg px-5' %>
+        </div>
+      <% end %>
     </div>
+  </div>
 
-    <div class="form-group">
-      <%= form.label :password, class: 'form-label' %>
-      <%= form.password_field :password, required: true, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :role, class: 'form-label' %>
-      <%= form.text_field :role, required: true, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :address, class: 'form-label' %>
-      <%= form.text_area :address, rows: 3, required: true, class: 'form-control' %>
-    </div>
-
-    <div class="form-group text-center mt-3">
-      <%= form.submit action, class: 'btn btn-primary' %>
-    </div>
-  <% end %>
-
-  <%= link_to 'Back to All Users', users_path, class: 'btn btn-secondary mt-3' %>
+  <div class="text-center mt-4">
+    <%= link_to 'Back to All Users', users_path, class: 'btn btn-secondary btn-lg' %>
+  </div>
 </div>
+
+<style>
+  .card {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    border-bottom: none;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+</style>

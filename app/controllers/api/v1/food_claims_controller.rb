@@ -1,8 +1,15 @@
-class Api::V1::FoodClaimsController < ApplicationController
+class Api::V1::FoodClaimsController < Api::V1::ApplicationController
+  # skip_before_action :verify_authenticity_token
+  before_action :set_food_claim, only: [ :show, :update, :destroy ]
+  before_action :authorize_request
+
+
   def index
     @food_claims = FoodClaim.all
     render json: @food_claims, status: :ok
   end
+
+
 
   def show
     if @food_claim
@@ -14,7 +21,14 @@ class Api::V1::FoodClaimsController < ApplicationController
 
   def create
     @food_claim = FoodClaim.new(food_claim_params)
+
     if @food_claim.save
+      # If the update_transaction_status flag is true, update the related food transaction
+      if params[:food_claim][:update_transaction_status]
+        food_transaction = FoodTransaction.find(@food_claim.food_transaction_id)
+        food_transaction.update(status: "in_progress")
+      end
+
       render json: @food_claim, status: :created
     else
       render json: { errors: @food_claim.errors.full_messages }, status: :unprocessable_entity
@@ -22,12 +36,8 @@ class Api::V1::FoodClaimsController < ApplicationController
   end
 
   def destroy
-    if @food_claim.feedbacks.exists? || @food_claim.food_claims.exists? || @food_claim.food_transactions.exists? || @food_claim.notifications.exists?
-      render json: { error: "Cannot delete food_claim with associated records" }, status: :unprocessable_entity
-    else
-      @food_claim.destroy
-      render json: { message: "food_claim deleted successfully" }, status: :ok
-    end
+    @food_claim.destroy
+    render json: { message: "food_claim deleted successfully" }, status: :ok
   end
 
   def update
@@ -47,7 +57,11 @@ class Api::V1::FoodClaimsController < ApplicationController
     end
   end
 
+
+
+
+
   def food_claim_params
-    params.permit(:id, :name, :email, :password, :address, :organization_type)
+    params.require(:food_claim).permit(:claimed_quantity, :claim_status, :food_transaction_id, :user_id, :creator_user_id)
   end
 end

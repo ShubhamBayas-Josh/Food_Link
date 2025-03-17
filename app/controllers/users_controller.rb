@@ -16,12 +16,14 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  skip_before_action :verify_authenticity_token # Disable CSRF for API requests
+
   def create
-    @user = User.new(user_params)
-    if @user.save
-      redirect_to @user, notice: "User was successfully created."
+    user = User.new(user_params)
+    if user.save
+      render json: { message: "User created successfully", user: user }, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: { error: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
   def edit
@@ -39,6 +41,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def approve_user
+    user = User.find_by(id: params[:id]) # Use `find_by` to avoid exception
+    if user.nil?
+      redirect_to users_path, alert: "User not found"
+      return
+    end
+
+    if user.update_column(:is_approved, true)
+      redirect_to users_path, notice: "User approved successfully"
+    else
+      redirect_to users_path, alert: "Error approving user."
+    end
+  end
+
+
   def destroy
     if @user.destroy
       redirect_to users_path, notice: "User was successfully deleted."
@@ -51,6 +68,9 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "User not found"
+    redirect_to users_path
   end
 
   def user_params

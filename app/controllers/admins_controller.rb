@@ -8,40 +8,35 @@ class AdminsController < ApplicationController
     @users = User.all
     @users_count = @users.count
 
-  # Fetching recent activities
-  @recent_donors = User.where(role: "donor").order(created_at: :desc).limit(5)
-  @recent_ngos = User.where(role: "NGO").order(created_at: :desc).limit(5)
-  @recent_food_donations = FoodTransaction.order(created_at: :desc).limit(5)
-  @recent_claims = FoodClaim.order(created_at: :desc).limit(5)
-  @recent_feedbacks = Feedback.order(created_at: :desc).limit(5)
+    # Fetching recent activities
+    @recent_donors = User.where(role: "donor").order(created_at: :desc).limit(5)
+    @recent_ngos = User.where(role: "ngo").order(created_at: :desc).limit(5)
+    @recent_food_donations = FoodTransaction.order(created_at: :desc).limit(5)
+    @recent_claims = FoodClaim.order(created_at: :desc).limit(5)
+    @recent_feedbacks = Feedback.order(created_at: :desc).limit(5)
 
     # Fetching Dashboard Statistics
     @total_donations = FoodTransaction.count
     @pending_donations = FoodTransaction.where(status: "pending").count
     @accepted_donations = FoodTransaction.where(status: "accepted").count
-    @rejected_donations = FoodTransaction.where(status: "rejected").count
+    @in_progress_donations = FoodTransaction.where(status: "in_progress").count
 
     @total_claims = FoodClaim.count
     @pending_claims = FoodClaim.where(claim_status: "pending").count
     @accepted_claims = FoodClaim.where(claim_status: "accepted").count
-    @rejected_claims = FoodClaim.where(claim_status: "rejected").count
+    @rejected_claims = FoodClaim.where(claim_status: "in_progress").count
 
-
-    @total_feedbacks = Feedback.count
+    @feedback_count = Feedback.count
     @food_wastage_reduced = FoodTransaction.where(status: "accepted").sum(:quantity) # Assuming 'quantity' is a column
   end
 
-  # GET /admins/1 or /admins/1.json
-  def show
+  def reports
+    @users = User.where(is_approved: false)
   end
 
   # GET /admins/new
   def new
     @admin = Admin.new
-  end
-
-  # GET /admins/1/edit
-  def edit
   end
 
   # POST /admins or /admins.json

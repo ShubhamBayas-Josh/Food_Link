@@ -1,16 +1,73 @@
-<%= content_for :title, "Donation & Claim Reports" %>
+<div class="container my-5">
+  <h1 class="text-center mb-4 display-4 font-weight-bold text-primary">Pending User Approvals</h1>
 
-<h1>Donation & Claim Reports</h1>
+  <% ngo_users = @users.select { |user| user.role == 'ngo' } %>
+  <% donor_users = @users.select { |user| user.role == 'donor' } %>
 
-<h3>Donations Over Time</h3>
-<canvas id="donationsOverTime"></canvas>
+  <div class="table-responsive">
+    <% if ngo_users.any? %>
+      <h3 class="text-center text-secondary mb-3">NGOs</h3>
+      <table class="table table-hover table-bordered shadow rounded-lg overflow-hidden">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Role</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% ngo_users.each do |user| %>
+            <tr>
+              <td class="align-middle"><%= user.name %></td>
+              <td class="align-middle"><%= user.email %></td>
+              <td class="align-middle text-center">
+<span class="badge bg-info text-white px-2 py-1 rounded-pill"><%= user.role.upcase %></span>
+              </td>
+              <td class="text-center align-middle">
+                <%= button_to 'Approve', approve_user_path(user), method: :post, class: 'btn btn-sm btn-success px-4 shadow-sm',
+                              data: { confirm: "Are you sure you want to approve #{user.name}?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
 
-<h3>Food Type Distribution</h3>
-<canvas id="foodTypeDistribution"></canvas>
+    <% if donor_users.any? %>
+      <h3 class="text-center text-secondary mt-5 mb-3">Donors</h3>
+      <table class="table table-hover table-bordered shadow rounded-lg overflow-hidden">
+        <thead class="bg-success text-white">
+          <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Role</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% donor_users.each do |user| %>
+            <tr>
+              <td class="align-middle"><%= user.name %></td>
+              <td class="align-middle"><%= user.email %></td>
+              <td class="align-middle text-center">
+                <span class="badge bg-warning text-dark px-2 py-1 rounded-pill"><%= user.role.upcase %></span>
+              </td>
+              <td class="text-center align-middle">
+                <%= button_to 'Approve', approve_user_path(user), method: :post, class: 'btn btn-sm btn-success px-4 shadow-sm',
+                              data: { confirm: "Are you sure you want to approve #{user.name}?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
 
-<h3>NGO Donation Activity</h3>
-<canvas id="ngoDonationActivity"></canvas>
-
-<script>
-
-</script>
+    <% if @users.empty? %>
+      <div class="text-center text-muted py-4">
+        <i class="fas fa-exclamation-circle fa-2x"></i>
+        <p>No pending approvals</p>
+      </div>
+    <% end %>
+  </div>
+</div>

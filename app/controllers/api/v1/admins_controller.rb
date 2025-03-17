@@ -1,4 +1,5 @@
 class Api::V1::AdminsController < ApplicationController
+  before_action :authorize_request
   def index
     @admins = Admin.all
     render json: @admins, status: :ok
