@@ -23,13 +23,10 @@ class Api::V1::AdminsController < ApplicationController
   end
 
   def destroy
-    if @admin.admins.exists? || @admin.food_claims.exists? || @admin.food_transactions.exists? || @admin.notifications.exists?
-      render json: { error: "Cannot delete admin with associated records" }, status: :unprocessable_entity
-    else
       @admin.destroy
       render json: { message: "admin deleted successfully" }, status: :ok
-    end
   end
+
 
   def update
     if @admin.update(admin_params)

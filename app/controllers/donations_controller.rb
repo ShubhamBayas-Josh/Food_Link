@@ -27,17 +27,9 @@ class DonationsController < ApplicationController
       @food_wastage_reduced = FoodTransaction.where(status: "accepted").sum(:quantity) # Assuming 'quantity' is a column
     end
 
-    # GET /admins/1 or /admins/1.json
-    def show
-    end
-
     # GET /admins/new
     def new
       @admin = Admin.new
-    end
-
-    # GET /admins/1/edit
-    def edit
     end
 
     # POST /admins or /admins.json
@@ -86,6 +78,6 @@ class DonationsController < ApplicationController
     end
 
     def admin_params
-      params.require(:admin).permit(:name) # Add other fields as needed
+      params.require(:admin).permit(:name) 
     end
 end

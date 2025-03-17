@@ -7,6 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
 users = [
   { name: "Shubham", email: "shubhambayas7@gmail.com", password: "Shubham@123", role: "Donor", address: "Damani nagar", organization_type: "Hotel" },
   { name: "Harsh", email: "harsh8@gmail.com", password: "Harsh@123", role: "Donor", address: "pune", organization_type: "Hotel" },
@@ -52,7 +53,6 @@ food_transactions.each do |transaction_data|
   )
 end
 
-
 food_claims = [
   { user_email: "abhays123@gmail.com", food_transaction_id: 1, claimed_quantity: 5, claim_status: "pending", creator_email: "yash8@gmail.com" },
   { user_email: "yash8@gmail.com", food_transaction_id: 2, claimed_quantity: 10, claim_status: "pending", creator_email: "shreyash1@gmail.com" }
@@ -93,21 +93,4 @@ feedbacks.each do |feedback_data|
   )
 end
 
-
-
 puts "Seed data successfully added!"
-
-
-# admins = [
-#   { name: "Admin1", email: "admin1@example.com", password: "Admin@123" },
-#   { name: "Admin2", email: "admin2@example.com", password: "Admin@123" }
-# ]
-
-# for admin_data in admins do
-#   Admin.find_or_create_by!(email: admin_data[:email]) do |admin|
-#     # admin.name = admin_data[:name]
-#     admin.password = admin_data[:password]
-#   end
-# end
-
-# User.delete_all

@@ -41,9 +41,6 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
     params.permit(:email, :password)
   end
 
-  private
-  private
-
   def user_params
     params[:organization_type] = params.delete(:organizationType) if params[:organizationType]
 

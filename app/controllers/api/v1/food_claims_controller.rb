@@ -3,13 +3,10 @@ class Api::V1::FoodClaimsController < Api::V1::ApplicationController
   before_action :set_food_claim, only: [ :show, :update, :destroy ]
   before_action :authorize_request
 
-
   def index
     @food_claims = FoodClaim.all
     render json: @food_claims, status: :ok
   end
-
-
 
   def show
     if @food_claim
@@ -56,10 +53,6 @@ class Api::V1::FoodClaimsController < Api::V1::ApplicationController
       render json: { error: "food_claim not found" }, status: :not_found
     end
   end
-
-
-
-
 
   def food_claim_params
     params.require(:food_claim).permit(:claimed_quantity, :claim_status, :food_transaction_id, :user_id, :creator_user_id)

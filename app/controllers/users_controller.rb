@@ -26,6 +26,7 @@ class UsersController < ApplicationController
       render json: { error: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
   def edit
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound

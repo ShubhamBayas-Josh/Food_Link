@@ -9,11 +9,11 @@ class AdminsController < ApplicationController
     @users_count = @users.count
 
     # Fetching recent activities
-    @recent_donors = User.where(role: "donor").order(created_at: :desc).limit(5)
-    @recent_ngos = User.where(role: "ngo").order(created_at: :desc).limit(5)
-    @recent_food_donations = FoodTransaction.order(created_at: :desc).limit(5)
-    @recent_claims = FoodClaim.order(created_at: :desc).limit(5)
-    @recent_feedbacks = Feedback.order(created_at: :desc).limit(5)
+    @recent_donors = User.where(role: "donor").order(created_at: :desc).limit(2)
+    @recent_ngos = User.where(role: "ngo").order(created_at: :desc).limit(2)
+    @recent_food_donations = FoodTransaction.order(created_at: :desc).limit(2)
+    @recent_claims = FoodClaim.order(created_at: :desc).limit(2)
+    @recent_feedbacks = Feedback.order(created_at: :desc).limit(2)
 
     # Fetching Dashboard Statistics
     @total_donations = FoodTransaction.count

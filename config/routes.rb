@@ -15,25 +15,8 @@ Rails.application.routes.draw do
   resources :donations
   post "/users/approve/:id", to: "users#approve_user", as: "approve_user"
 
-  # Rails.application.routes.draw do
 
-  #   match "/api/v1/*path", to: "application#preflight", via: [ :options ]
-  # end
-
-
-  # namespace :api do
-  #   namespace :v1 do
-  #     resources :users, only: [ :index, :show, :create, :update, :destroy ]
-  #     match "users", to: "users#options", via: :options
-
-  #     get "/*a", to: "application#not_found"
-  #   end
-  # end
-
-  # namespace :api do
-  #   post "/signup", to: "users#create"
-  # end
-
+  # api routes
   namespace :api do
     namespace :v1 do
       resources :users, only: [ :index, :show, :create, :update, :destroy ]
