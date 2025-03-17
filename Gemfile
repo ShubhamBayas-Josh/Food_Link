@@ -77,7 +77,7 @@ end
 gem "faker"
 source "https://rubygems.org"
 
-gem "stringio", "3.1.2"
+gem "stringio", "3.1.5"
 gem "simplecov", require: false, group: :test
 
 gem "factory_bot", "~> 6.5"
