@@ -72,7 +72,7 @@ gem "rack-cors", "~> 2.0"
 gem "bcrypt", "~> 3.1"
 
 group :test do
-  gem "shoulda-matchers", "~> 5.0"
+  gem "shoulda-matchers", "~> 6.4"
 end
 gem "faker"
 source "https://rubygems.org"
