@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  skip_before_action :verify_authenticity_token # Disable CSRF for API requests
+  skip_before_action :verify_authenticity_token
 
   def create
     user = User.new(user_params)

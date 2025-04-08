@@ -29,7 +29,7 @@ gem "jbuilder"
 # gem "bcrypt", "~> 3.1.7"
 
 group :test do
-  gem 'database_cleaner-active_record'
+  gem "database_cleaner-active_record"
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

@@ -78,6 +78,6 @@ class DonationsController < ApplicationController
     end
 
     def admin_params
-      params.require(:admin).permit(:name) 
+      params.require(:admin).permit(:name)
     end
 end
